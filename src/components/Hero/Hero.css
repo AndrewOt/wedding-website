@@ -1,10 +1,15 @@
-.hero-parent {
-    text-align: center;
-    background-color: #16454b;
+.hero {
+    width: 100%;
+    position: relative;
+    height: 700px;
+};
+
+.hero-img {
+    background: url('../../imgs/b25516ff7c63069811ac5b63028feec1.webp') center no-repeat;
 }
 
-.engagement-hero {
-    width: 50%;
-    margin: 30px auto;
-    background-color: #00ffaa
+.hero-background {
+    width: inherit;
+    height: inherit;
+    background-color: #13202b;
 };

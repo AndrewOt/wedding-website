@@ -1,10 +1,12 @@
 import './Hero.css';
-import Background from '../../imgs/b25516ff7c63069811ac5b63028feec1.webp';
 
 export const Hero = () => {
-    return (
-        <div className="hero-parent">
-            <img className="engagement-hero" src={Background} />
-        </div>
-    );
+  return (
+    <div className="hero">
+      <div className="hero-img">
+        <span style={{ position: 'absolute', zIndex: 30, color:'white' }}>hi there</span>
+      </div>
+      <div className="hero-background" />
+    </div>
+  );
 }

@@ -1,0 +1,19 @@
+html {
+  font-family: "Roberto", sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+.content-body {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+@media screen {
+  .content-body {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+}

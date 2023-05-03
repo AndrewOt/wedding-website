@@ -19,7 +19,6 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export default function Index() {
-  console.log('hit index')
   return (
     <div style={{ backgroundColor: "#f99a5a" }}>
       <Hero />

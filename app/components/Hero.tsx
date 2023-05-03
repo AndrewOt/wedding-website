@@ -1,4 +1,4 @@
-import "./Hero.css";
+import type { LinksFunction } from "@remix-run/server-runtime";
 
 export const Hero = () => (
   <div className="hero-image">

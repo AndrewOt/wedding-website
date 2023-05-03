@@ -1,4 +1,4 @@
-import type { V2_MetaFunction } from "@remix-run/node";
+import type { LinksFunction, V2_MetaFunction } from "@remix-run/node";
 import { Footer } from "~/components/Footer";
 import { Hero } from "~/components/Hero";
 import { OurStory } from "~/components/OurStory";
@@ -6,7 +6,9 @@ import { Photos } from "~/components/Photos";
 import { Registry } from "~/components/Registry";
 import { RSVP } from "~/components/RSVP";
 
-import "../index.css";
+import styles from "../index.css";
+
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export const meta: V2_MetaFunction = () => {
   return [{ title: "Andrew 💕 Lydia" }];

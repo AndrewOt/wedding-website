@@ -6,15 +6,20 @@ import { Photos } from "~/components/Photos";
 import { Registry } from "~/components/Registry";
 import { RSVP } from "~/components/RSVP";
 
-import styles from "../index.css";
+import indexStyles from "../index.css";
+import heroStyles from "~/components/Hero.css";
 
-export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: indexStyles },
+  { rel: "stylesheet", href: heroStyles },
+];
 
 export const meta: V2_MetaFunction = () => {
   return [{ title: "Andrew 💕 Lydia" }];
 };
 
 export default function Index() {
+  console.log('hit index')
   return (
     <div style={{ backgroundColor: "#f99a5a" }}>
       <Hero />

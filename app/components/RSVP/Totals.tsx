@@ -14,7 +14,7 @@ export const Totals = ({ rsvps }: TotalsProps) => {
   const totalWithAllergies = rsvps.reduce(
     (previousAccumlatorValue, currentRsvp) => {
       if (
-        typeof currentRsvp.foodAllergies !== "undefined" ||
+        typeof currentRsvp.foodAllergies !== "undefined" &&
         currentRsvp.foodAllergies !== ""
       ) {
         return previousAccumlatorValue + 1;
@@ -25,9 +25,19 @@ export const Totals = ({ rsvps }: TotalsProps) => {
   );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", marginBottom: '15px' }}>
+    <div
+      style={{
+        display: "flex",
+        marginLeft: "5px",
+        marginBottom: "15px",
+        flexDirection: "column",
+      }}
+    >
+      <h2>Totals</h2>
       <span>Total coming: {totalComing}</span>
-      <span>Total with allergies: {totalWithAllergies}</span>
+      {totalWithAllergies > 0 ? (
+        <span>Total with allergies: {totalWithAllergies}</span>
+      ) : null}
     </div>
   );
 };

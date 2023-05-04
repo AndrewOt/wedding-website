@@ -15,22 +15,28 @@ export type RSVP = {
 
 export const loader: LoaderFunction = () => [
   {
-    inviteeName: "test 1",
+    inviteeName: "Josh and Victoria Rimes",
     isAttending: true,
     numberOfPeople: 1,
   },
   {
-    inviteeName: "test 2",
+    inviteeName: "Dave and Leah Barnett",
+    isAttending: false,
+    numberOfPeople: 1,
+    foodAllergies: "Gluten",
+  },
+  {
+    inviteeName: "Jeff and Jill Brown",
     isAttending: false,
     numberOfPeople: 1,
   },
   {
-    inviteeName: "test 3",
-    isAttending: false,
+    inviteeName: "Tom and Becky Ottaviano",
+    isAttending: true,
     numberOfPeople: 1,
   },
   {
-    inviteeName: "test 4",
+    inviteeName: "Jenny Brown",
     isAttending: true,
     numberOfPeople: 1,
   },
@@ -49,45 +55,33 @@ export default function Rsvps() {
     let predicate: (item: RSVP) => boolean;
 
     if (shouldShowOnlyAttending) {
-      predicate = (rsvp) => rsvp.inviteeName.includes(text) && rsvp.isAttending;
+      predicate = (rsvp) =>
+        rsvp.inviteeName.toLowerCase().includes(text.toLowerCase()) &&
+        rsvp.isAttending;
     } else {
-      predicate = (rsvp) => rsvp.inviteeName.includes(text);
+      predicate = (rsvp) =>
+        rsvp.inviteeName.toLowerCase().includes(text.toLowerCase());
     }
 
-    // if (isOnlyAttending && text === "") {
-    //   predicate = (rsvp) => rsvp.isAttending === isOnlyAttending;
-    // } else if (!isOnlyAttending && text !== "") {
-    //   predicate = (rsvp) => rsvp.inviteeName.includes(text);
-    // } else if (isOnlyAttending) {
-    //   predicate = (rsvp) =>
-    //     rsvp.isAttending === isOnlyAttending && rsvp.inviteeName.includes(text);
-    // } else {
-    //   predicate = () => true;
-    // }
-
     setDisplayData(data.current.filter(predicate));
-    // if (text === "") {
-    //   setDisplayData(data.current);
-    //   return;
-    // }
-
-    // const filteredData = data.current.filter(
-    //   (rsvp) => rsvp.inviteeName.includes(text) && isOnlyAttending
-    // );
-
-    // setDisplayData(filteredData);
   };
 
   const components = useMemo(
     () =>
-      displayData.map((rsvp) => <Invitee key={rsvp.inviteeName} rsvp={rsvp} />),
+      displayData.map((rsvp, index) => (
+        <Invitee
+          isStripped={index % 2 === 0}
+          isLast={index === displayData.length - 1}
+          key={rsvp.inviteeName}
+          rsvp={rsvp}
+        />
+      )),
     [displayData]
   );
 
   return (
     <div>
       <RsvpSearch onFilterInput={handleFilter} />
-      <h2>Totals</h2>
       <Totals rsvps={data.current} />
       <div>{components}</div>
     </div>

@@ -1,8 +1,13 @@
+import { useState } from "react";
+
 export interface RsvpSearchProps {
-  onSearchInput: (text: string) => void;
+  onFilterInput: (text: string, isOnlyAttending: boolean) => void;
 }
 
-export const RsvpSearch = ({ onSearchInput }: RsvpSearchProps) => {
+export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
+  const [text, setText] = useState("");
+  const [isOnlyAttending, setIsOnlyAttending] = useState(false);
+
   return (
     <div>
       <label htmlFor="RsvpSearchInput">Search for an invite</label>
@@ -10,9 +15,21 @@ export const RsvpSearch = ({ onSearchInput }: RsvpSearchProps) => {
         id="RsvpSearchInput"
         type="text"
         onChange={(e) => {
-          onSearchInput(e.currentTarget.value);
+          const inputtedText = e.currentTarget.value;
+          setText(inputtedText);
+          onFilterInput(inputtedText, isOnlyAttending);
         }}
       />
+
+      <input
+        type="button"
+        onClick={() => {
+          const newAttendingValue = !isOnlyAttending;
+          setIsOnlyAttending(newAttendingValue);
+          onFilterInput(text, newAttendingValue);
+        }}
+        value={isOnlyAttending ? "Show All" : "Show Only Attending"}
+      ></input>
     </div>
   );
 };

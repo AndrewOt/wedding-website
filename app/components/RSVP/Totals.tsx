@@ -25,7 +25,7 @@ export const Totals = ({ rsvps }: TotalsProps) => {
   );
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", flexDirection: "column", marginBottom: '15px' }}>
       <span>Total coming: {totalComing}</span>
       <span>Total with allergies: {totalWithAllergies}</span>
     </div>

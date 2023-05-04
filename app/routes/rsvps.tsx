@@ -24,6 +24,16 @@ export const loader: LoaderFunction = () => [
     isAttending: false,
     numberOfPeople: 1,
   },
+  {
+    inviteeName: "test 3",
+    isAttending: false,
+    numberOfPeople: 1,
+  },
+  {
+    inviteeName: "test 4",
+    isAttending: true,
+    numberOfPeople: 1,
+  },
 ];
 
 export const meta: V2_MetaFunction = () => {
@@ -35,17 +45,37 @@ export default function Rsvps() {
   const data = useRef(result as RSVP[]);
   const [displayData, setDisplayData] = useState(result as RSVP[]);
 
-  const handleFilter = (text: string) => {
-    if (text === "") {
-      setDisplayData(data.current);
-      return;
+  const handleFilter = (text: string, shouldShowOnlyAttending: boolean) => {
+    let predicate: (item: RSVP) => boolean;
+
+    if (shouldShowOnlyAttending) {
+      predicate = (rsvp) => rsvp.inviteeName.includes(text) && rsvp.isAttending;
+    } else {
+      predicate = (rsvp) => rsvp.inviteeName.includes(text);
     }
 
-    const filteredData = data.current.filter((rsvp) =>
-      rsvp.inviteeName.includes(text)
-    );
+    // if (isOnlyAttending && text === "") {
+    //   predicate = (rsvp) => rsvp.isAttending === isOnlyAttending;
+    // } else if (!isOnlyAttending && text !== "") {
+    //   predicate = (rsvp) => rsvp.inviteeName.includes(text);
+    // } else if (isOnlyAttending) {
+    //   predicate = (rsvp) =>
+    //     rsvp.isAttending === isOnlyAttending && rsvp.inviteeName.includes(text);
+    // } else {
+    //   predicate = () => true;
+    // }
 
-    setDisplayData(filteredData);
+    setDisplayData(data.current.filter(predicate));
+    // if (text === "") {
+    //   setDisplayData(data.current);
+    //   return;
+    // }
+
+    // const filteredData = data.current.filter(
+    //   (rsvp) => rsvp.inviteeName.includes(text) && isOnlyAttending
+    // );
+
+    // setDisplayData(filteredData);
   };
 
   const components = useMemo(
@@ -56,10 +86,10 @@ export default function Rsvps() {
 
   return (
     <div>
-      <RsvpSearch onSearchInput={handleFilter} />
+      <RsvpSearch onFilterInput={handleFilter} />
       <h2>Totals</h2>
       <Totals rsvps={data.current} />
-      {components}
+      <div>{components}</div>
     </div>
   );
 }

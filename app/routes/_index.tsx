@@ -4,7 +4,7 @@ import { Hero } from "~/components/Hero";
 import { OurStory } from "~/components/OurStory";
 import { Photos } from "~/components/Photos";
 import { Registry } from "~/components/Registry";
-import { RSVP } from "~/components/RSVP";
+import { FindRsvp } from "~/components/RSVP/FindRsvp";
 
 import indexStyles from "../index.css";
 import heroStyles from "~/components/Hero.css";
@@ -24,7 +24,7 @@ export default function Index() {
       <Hero />
       <div className="content-body">
         <OurStory />
-        <RSVP />
+        <FindRsvp />
         <Registry />
         <Photos />
       </div>

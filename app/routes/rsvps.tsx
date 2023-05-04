@@ -1,10 +1,12 @@
 import type { V2_MetaFunction } from "@remix-run/node";
-import type { LoaderFunction } from "@remix-run/server-runtime";
+import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
 import { useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import { Invitee } from "~/components/RSVP/Invitee";
 import { RsvpSearch } from "~/components/RSVP/RsvpSearch";
 import { Totals } from "~/components/RSVP/Totals";
+
+import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
 
 export type RSVP = {
   inviteeName: string;
@@ -12,6 +14,10 @@ export type RSVP = {
   numberOfPeople: number;
   foodAllergies?: string;
 };
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: DataDisplayStyles },
+];
 
 export const loader: LoaderFunction = () => [
   {

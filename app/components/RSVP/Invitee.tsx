@@ -9,7 +9,11 @@ interface InviteeProps {
 }
 
 export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
-  const { inviteeName, isAttending, foodAllergies, numberOfPeople } = rsvp;
+  const {
+    inviteeName,
+    isAttendingCeremony: isAttending,
+    numberOfPeople,
+  } = rsvp;
   const styles: CSSProperties = {
     display: "flex",
     paddingLeft: "5px",
@@ -33,9 +37,6 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
         header="How many were invited?"
         body={numberOfPeople.toString()}
       />
-      {typeof foodAllergies !== "undefined" && foodAllergies.length > 0 ? (
-        <span>food allergies: {foodAllergies}</span>
-      ) : null}
     </div>
   );
 };

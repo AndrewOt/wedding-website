@@ -10,9 +10,9 @@ import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
 
 export type RSVP = {
   inviteeName: string;
-  isAttending: boolean;
   numberOfPeople: number;
-  foodAllergies?: string;
+  isAttendingCeremony: boolean;
+  isAttendingReception: boolean;
 };
 
 export const links: LinksFunction = () => [
@@ -23,23 +23,23 @@ export const loader: LoaderFunction = () => [
   {
     inviteeName: "Josh and Victoria Rimes",
     isAttending: true,
-    numberOfPeople: 1,
+    numberOfPeople: 2,
   },
   {
     inviteeName: "Dave and Leah Barnett",
     isAttending: false,
-    numberOfPeople: 1,
+    numberOfPeople: 4,
     foodAllergies: "Gluten",
   },
   {
     inviteeName: "Jeff and Jill Brown",
     isAttending: false,
-    numberOfPeople: 1,
+    numberOfPeople: 2,
   },
   {
     inviteeName: "Tom and Becky Ottaviano",
     isAttending: true,
-    numberOfPeople: 1,
+    numberOfPeople: 2,
   },
   {
     inviteeName: "Jenny Brown",
@@ -63,7 +63,7 @@ export default function Rsvps() {
     if (shouldShowOnlyAttending) {
       predicate = (rsvp) =>
         rsvp.inviteeName.toLowerCase().includes(text.toLowerCase()) &&
-        rsvp.isAttending;
+        rsvp.isAttendingCeremony;
     } else {
       predicate = (rsvp) =>
         rsvp.inviteeName.toLowerCase().includes(text.toLowerCase());

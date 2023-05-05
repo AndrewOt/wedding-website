@@ -22,28 +22,33 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = () => [
   {
     inviteeName: "Josh and Victoria Rimes",
-    isAttending: true,
+    isAttendingCeremony: true,
+    isAttendingReception: true,
     numberOfPeople: 2,
   },
   {
     inviteeName: "Dave and Leah Barnett",
-    isAttending: false,
+    isAttendingCeremony: false,
+    isAttendingReception: false,
     numberOfPeople: 4,
     foodAllergies: "Gluten",
   },
   {
     inviteeName: "Jeff and Jill Brown",
-    isAttending: false,
+    isAttendingCeremony: false,
+    isAttendingReception: false,
     numberOfPeople: 2,
   },
   {
     inviteeName: "Tom and Becky Ottaviano",
-    isAttending: true,
+    isAttendingCeremony: true,
+    isAttendingReception: true,
     numberOfPeople: 2,
   },
   {
     inviteeName: "Jenny Brown",
-    isAttending: true,
+    isAttendingCeremony: true,
+    isAttendingReception: false,
     numberOfPeople: 1,
   },
 ];

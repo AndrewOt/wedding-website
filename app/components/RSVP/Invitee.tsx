@@ -11,9 +11,11 @@ interface InviteeProps {
 export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
   const {
     inviteeName,
-    isAttendingCeremony: isAttending,
     numberOfPeople,
+    isAttendingCeremony,
+    isAttendingReception
   } = rsvp;
+
   const styles: CSSProperties = {
     display: "flex",
     paddingLeft: "5px",
@@ -30,8 +32,12 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
     <div key={inviteeName} style={styles}>
       <DataDisplay header="Name" body={inviteeName} />
       <DataDisplay
-        header="Are they coming?"
-        body={isAttending ? "yes" : "no"}
+        header="Are they coming to the ceremony?"
+        body={isAttendingCeremony ? "yes" : "no"}
+      />
+      <DataDisplay
+        header="Are they coming to the reception?"
+        body={isAttendingReception ? "yes" : "no"}
       />
       <DataDisplay
         header="How many were invited?"

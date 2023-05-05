@@ -5,8 +5,14 @@ export interface TotalsProps {
 }
 
 export const Totals = ({ rsvps }: TotalsProps) => {
-  const totalComing = rsvps.reduce((previousAccumlatorValue, currentRsvp) => {
+  const totalComingCeremony = rsvps.reduce((previousAccumlatorValue, currentRsvp) => {
     return currentRsvp.isAttendingCeremony
+      ? previousAccumlatorValue + currentRsvp.numberOfPeople
+      : previousAccumlatorValue;
+  }, 0);
+
+  const totalComingReception = rsvps.reduce((previousAccumlatorValue, currentRsvp) => {
+    return currentRsvp.isAttendingReception
       ? previousAccumlatorValue + currentRsvp.numberOfPeople
       : previousAccumlatorValue;
   }, 0);
@@ -21,7 +27,8 @@ export const Totals = ({ rsvps }: TotalsProps) => {
       }}
     >
       <h2>Totals</h2>
-      <span>Total coming: {totalComing}</span>
+      <span>Total coming to the ceremony: {totalComingCeremony}</span>
+      <span>Total coming to the reception: {totalComingReception}</span>
     </div>
   );
 };

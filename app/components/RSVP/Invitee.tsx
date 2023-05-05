@@ -25,13 +25,10 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
   return (
     <div key={inviteeName} style={styles}>
       <DataDisplay header="Name" body={inviteeName} />
-      {/* <span>Name: {inviteeName}</span> */}
-      {/* <span>isAttending: {isAttending ? "yes" : "no"}</span> */}
       <DataDisplay
         header="Are they coming?"
         body={isAttending ? "yes" : "no"}
       />
-      {/* <span>num guests: {numberOfPeople}</span> */}
       <DataDisplay
         header="How many were invited?"
         body={numberOfPeople.toString()}

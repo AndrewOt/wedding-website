@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { CSSProperties, useMemo } from "react";
 import type { RSVP } from "~/routes/rsvps";
 import { DataDisplay } from "./DataDisplay";
 
@@ -8,12 +8,15 @@ interface InviteeProps {
   isStripped: boolean;
 }
 
+const boolToString = (value: boolean) => value ? "yes" : "no";
+
 export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
   const {
     inviteeName,
     numberOfPeople,
     isAttendingCeremony,
-    isAttendingReception
+    isAttendingRehersal,
+    isAttendingReception,
   } = rsvp;
 
   const styles: CSSProperties = {
@@ -33,11 +36,15 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
       <DataDisplay header="Name" body={inviteeName} />
       <DataDisplay
         header="Are they coming to the ceremony?"
-        body={isAttendingCeremony ? "yes" : "no"}
+        body={boolToString(isAttendingCeremony)}
       />
       <DataDisplay
         header="Are they coming to the reception?"
-        body={isAttendingReception ? "yes" : "no"}
+        body={boolToString(isAttendingReception)}
+      />
+      <DataDisplay
+        header="Are they coming to the rehersal dinner?"
+        body={boolToString(isAttendingRehersal)}
       />
       <DataDisplay
         header="How many were invited?"

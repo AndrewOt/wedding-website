@@ -3,7 +3,7 @@ import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import { Invitee } from "~/components/RSVP/Invitee";
-import { RsvpSearch } from "~/components/RSVP/RsvpSearch";
+import { RspvFilter, RsvpSearch } from "~/components/RSVP/RsvpSearch";
 import { Totals } from "~/components/RSVP/Totals";
 
 import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
@@ -15,6 +15,7 @@ export type RSVP = {
   inviteeName: string;
   numberOfPeople: number;
   isAttendingCeremony: boolean;
+  isAttendingRehersal: boolean;
   isAttendingReception: boolean;
 };
 
@@ -32,6 +33,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const name = formData.get("inviteeName")?.toString();
   const num = Number(formData.get("numberOfPeople")?.toString());
   const ceremony = Boolean(formData.get("isAttendintCeremony")?.toString());
+  const rehersal = Boolean(formData.get("isAttendingReception")?.toString());
   const reception = Boolean(formData.get("isAttendingReception")?.toString());
 
   if (name === undefined || typeof num !== 'number') {
@@ -41,6 +43,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const rsvpEntityToSave: RSVP = {
     inviteeName: name,
     numberOfPeople: num,
+    isAttendingRehersal: rehersal,
     isAttendingCeremony: ceremony,
     isAttendingReception: reception,
   };
@@ -63,19 +66,19 @@ export default function Rsvps() {
   const data = useRef(rsvpList as RSVP[]);
   const [displayData, setDisplayData] = useState(rsvpList as RSVP[]);
 
-  const handleFilter = (text: string, shouldShowOnlyAttending: boolean) => {
-    let predicate: (item: RSVP) => boolean;
-
-    if (shouldShowOnlyAttending) {
-      predicate = (rsvp) =>
-        rsvp.inviteeName.toLowerCase().includes(text.toLowerCase()) &&
-        rsvp.isAttendingCeremony;
-    } else {
-      predicate = (rsvp) =>
-        rsvp.inviteeName.toLowerCase().includes(text.toLowerCase());
-    }
-
-    setDisplayData(data.current.filter(predicate));
+  const handleFilter = (text: string, attendingFilter: RspvFilter) => {
+    setDisplayData(data.current.filter((item) => {
+      const {
+        isAttendingCeremony,
+        isAttendingReception,
+        isAttendingRehersal
+      } = attendingFilter;
+      
+      return item.inviteeName.toLowerCase().includes(text.toLowerCase())
+        && isAttendingCeremony
+        && isAttendingReception
+        && isAttendingRehersal;
+    }));
   };
 
   useEffect(() => {

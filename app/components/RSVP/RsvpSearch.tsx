@@ -1,12 +1,21 @@
 import { useState } from "react";
+import FilterToggle from "./FilterToggle";
 
 export interface RsvpSearchProps {
-  onFilterInput: (text: string, isOnlyAttending: boolean) => void;
+  onFilterInput: (text: string, attendingFilter: RspvFilter) => void;
+}
+
+export type RspvFilter = {
+  isAttendingCeremony: boolean;
+  isAttendingRehersal: boolean;
+  isAttendingReception: boolean;
 }
 
 export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
   const [text, setText] = useState("");
-  const [isOnlyAttending, setIsOnlyAttending] = useState(false);
+  const [isAttendingRehersal, setIsAttendingRehersal] = useState(true);
+  const [isAttendingCeremony, setIsAttendingCeremony] = useState(true);
+  const [isAttendingReception, setIsAttendingReception] = useState(true);
 
   return (
     <div
@@ -24,19 +33,35 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
           onChange={(e) => {
             const inputtedText = e.currentTarget.value;
             setText(inputtedText);
-            onFilterInput(inputtedText, isOnlyAttending);
+            onFilterInput(inputtedText, { isAttendingCeremony, isAttendingReception, isAttendingRehersal });
           }}
         />
 
-        <input
-          type="button"
-          style={{ width: "200px" }}
-          onClick={() => {
-            const newAttendingValue = !isOnlyAttending;
-            setIsOnlyAttending(newAttendingValue);
-            onFilterInput(text, newAttendingValue);
-          }}
-          value={isOnlyAttending ? "Show All" : "Show Only Attending"}
+        <FilterToggle
+          label="Attending Ceremony"
+            checked={isAttendingCeremony}
+            onChange={(value) => {
+              setIsAttendingCeremony(value);
+              onFilterInput(text, { isAttendingCeremony: value, isAttendingReception, isAttendingRehersal });
+            }}
+        />
+        
+        <FilterToggle
+          label="Attending Reception"
+            checked={isAttendingReception}
+            onChange={(value) => {
+              setIsAttendingReception(value);
+              onFilterInput(text, { isAttendingCeremony, isAttendingReception: value, isAttendingRehersal });
+            }}
+        />
+
+        <FilterToggle
+          label="Attending Rehersal"
+            checked={isAttendingRehersal}
+            onChange={(value) => {
+              setIsAttendingRehersal(value);
+              onFilterInput(text, { isAttendingCeremony, isAttendingReception, isAttendingRehersal: value });
+            }}
         />
       </div>
     </div>

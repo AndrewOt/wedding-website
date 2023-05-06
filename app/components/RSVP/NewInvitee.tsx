@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { Form } from '@remix-run/react';
+import { useEffect, useRef } from 'react';
 
 export interface NewInviteeProps {
   errors: { message: string };
@@ -40,6 +40,11 @@ export default ({ errors }: NewInviteeProps) => {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <label>Are they coming to the reception?</label>
           <input style={{ width: '5rem', transform: 'translateX(-1.5rem)' }} type="checkbox" id="isAttendingReception" name="isAttendingReception" />
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <label>Are they coming to the rehersal?</label>
+          <input style={{ width: '5rem', transform: 'translateX(-1.5rem)' }} type="checkbox" id="isAttendingRehersal" name="isAttendingRehersal" />
         </div>
 
         <input type="submit" value="Add New Invitee" />

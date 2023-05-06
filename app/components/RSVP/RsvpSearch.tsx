@@ -30,7 +30,7 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
 
         <input
           type="button"
-          style={{ width: "20vw" }}
+          style={{ width: "200px" }}
           onClick={() => {
             const newAttendingValue = !isOnlyAttending;
             setIsOnlyAttending(newAttendingValue);

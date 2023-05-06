@@ -1,4 +1,4 @@
-import type { LinksFunction, V2_MetaFunction } from "@remix-run/node";
+import type { LinksFunction, V2_MetaFunction } from "@vercel/remix";
 import { Footer } from "~/components/Footer";
 import { Hero } from "~/components/Hero";
 import { OurStory } from "~/components/OurStory";

@@ -1,12 +1,15 @@
-import type { V2_MetaFunction } from "@remix-run/node";
+import { ActionArgs, ActionFunction, V2_MetaFunction, json } from "@vercel/remix";
 import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import { Invitee } from "~/components/RSVP/Invitee";
 import { RsvpSearch } from "~/components/RSVP/RsvpSearch";
 import { Totals } from "~/components/RSVP/Totals";
 
 import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
+import { addRsvp, getRsvps } from "~/utilities";
+import NewInvitee from "~/components/RSVP/NewInvitee";
+import { useActionData } from "@remix-run/react";
 
 export type RSVP = {
   inviteeName: string;
@@ -19,48 +22,46 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: DataDisplayStyles },
 ];
 
-export const loader: LoaderFunction = () => [
-  {
-    inviteeName: "Josh and Victoria Rimes",
-    isAttendingCeremony: true,
-    isAttendingReception: true,
-    numberOfPeople: 2,
-  },
-  {
-    inviteeName: "Dave and Leah Barnett",
-    isAttendingCeremony: false,
-    isAttendingReception: false,
-    numberOfPeople: 4,
-    foodAllergies: "Gluten",
-  },
-  {
-    inviteeName: "Jeff and Jill Brown",
-    isAttendingCeremony: false,
-    isAttendingReception: false,
-    numberOfPeople: 2,
-  },
-  {
-    inviteeName: "Tom and Becky Ottaviano",
-    isAttendingCeremony: true,
-    isAttendingReception: true,
-    numberOfPeople: 2,
-  },
-  {
-    inviteeName: "Jenny Brown",
-    isAttendingCeremony: true,
-    isAttendingReception: false,
-    numberOfPeople: 1,
-  },
-];
-
 export const meta: V2_MetaFunction = () => {
   return [{ title: "RSVPs" }];
 };
 
+export const action: ActionFunction = async ({ request }: ActionArgs) => {
+  const formData = await request.formData();
+  
+  const name = formData.get("inviteeName")?.toString();
+  const num = Number(formData.get("numberOfPeople")?.toString());
+  const ceremony = Boolean(formData.get("isAttendintCeremony")?.toString());
+  const reception = Boolean(formData.get("isAttendingReception")?.toString());
+
+  if (name === undefined || typeof num !== 'number') {
+    return json({ message: 'Failed to save. Either the name or the number of guests was not provided.' });
+  }
+
+  const rsvpEntityToSave: RSVP = {
+    inviteeName: name,
+    numberOfPeople: num,
+    isAttendingCeremony: ceremony,
+    isAttendingReception: reception,
+  };
+
+  try {
+    return await addRsvp(rsvpEntityToSave);
+  } catch {
+    return json({ message: 'Saving the data to the database was not successful. Please try again.'});
+  }
+};
+
+export const loader: LoaderFunction = async () => {
+  const rsvps = await getRsvps();
+  return rsvps;
+};
+
 export default function Rsvps() {
-  const result = useLoaderData();
-  const data = useRef(result as RSVP[]);
-  const [displayData, setDisplayData] = useState(result as RSVP[]);
+  const rsvpList = useLoaderData();
+  const errors = useActionData();
+  const data = useRef(rsvpList as RSVP[]);
+  const [displayData, setDisplayData] = useState(rsvpList as RSVP[]);
 
   const handleFilter = (text: string, shouldShowOnlyAttending: boolean) => {
     let predicate: (item: RSVP) => boolean;
@@ -77,22 +78,23 @@ export default function Rsvps() {
     setDisplayData(data.current.filter(predicate));
   };
 
-  const components = useMemo(
-    () =>
-      displayData.map((rsvp, index) => (
-        <Invitee
-          isStripped={index % 2 === 0}
-          isLast={index === displayData.length - 1}
-          key={rsvp.inviteeName}
-          rsvp={rsvp}
-        />
-      )),
-    [displayData]
-  );
+  useEffect(() => {
+    setDisplayData(rsvpList as RSVP[]);
+  }, [rsvpList]);
+
+  const components = displayData.map((rsvp, index) => (
+    <Invitee
+      isStripped={index % 2 === 0}
+      isLast={index === displayData.length - 1}
+      key={rsvp.inviteeName}
+      rsvp={rsvp}
+    />
+  ));
 
   return (
     <div>
       <RsvpSearch onFilterInput={handleFilter} />
+      <NewInvitee errors={errors} />
       <Totals rsvps={data.current} />
       <div>{components}</div>
     </div>

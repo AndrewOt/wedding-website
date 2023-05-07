@@ -1,17 +1,19 @@
-import { ActionArgs, ActionFunction, V2_MetaFunction, json } from "@vercel/remix";
-import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { v4 } from "uuid";
 import { useLoaderData } from "react-router";
-import { Invitee } from "~/components/RSVP/Invitee";
-import { RspvFilter, RsvpSearch } from "~/components/RSVP/RsvpSearch";
-import { Totals } from "~/components/RSVP/Totals";
-
-import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
-import { addRsvp, getRsvps } from "~/utilities";
-import NewInvitee from "~/components/RSVP/NewInvitee";
 import { useActionData } from "@remix-run/react";
+import { useEffect, useRef, useState } from "react";
+import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
+import { ActionArgs, ActionFunction, V2_MetaFunction, json } from "@vercel/remix";
+
+import { addRsvp, getRsvps } from "~/utilities";
+import { Totals } from "~/components/RSVP/Totals";
+import { Invitee } from "~/components/RSVP/Invitee";
+import NewInvitee from "~/components/RSVP/NewInvitee";
+import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
+import { RspvFilter, RsvpSearch } from "~/components/RSVP/RsvpSearch";
 
 export type RSVP = {
+  id: string;
   inviteeName: string;
   numberOfPeople: number;
   isAttendingCeremony: boolean;
@@ -32,8 +34,8 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   
   const name = formData.get("inviteeName")?.toString();
   const num = Number(formData.get("numberOfPeople")?.toString());
-  const ceremony = Boolean(formData.get("isAttendintCeremony")?.toString());
-  const rehersal = Boolean(formData.get("isAttendingReception")?.toString());
+  const ceremony = Boolean(formData.get("isAttendingCeremony")?.toString());
+  const rehersal = Boolean(formData.get("isAttendingRehersal")?.toString());
   const reception = Boolean(formData.get("isAttendingReception")?.toString());
 
   if (name === undefined || typeof num !== 'number') {
@@ -41,6 +43,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   }
 
   const rsvpEntityToSave: RSVP = {
+    id: v4(),
     inviteeName: name,
     numberOfPeople: num,
     isAttendingRehersal: rehersal,
@@ -87,10 +90,10 @@ export default function Rsvps() {
 
   const components = displayData.map((rsvp, index) => (
     <Invitee
+      rsvp={rsvp}
+      key={rsvp.inviteeName}
       isStripped={index % 2 === 0}
       isLast={index === displayData.length - 1}
-      key={rsvp.inviteeName}
-      rsvp={rsvp}
     />
   ));
 

@@ -1,6 +1,6 @@
-import { CSSProperties, useMemo } from "react";
+import { CSSProperties } from "react";
 import type { RSVP } from "~/routes/rsvps";
-import { DataDisplay } from "./DataDisplay";
+import { InviteDetails } from "./InviteeDetails";
 
 interface InviteeProps {
   rsvp: RSVP;
@@ -8,10 +8,9 @@ interface InviteeProps {
   isStripped: boolean;
 }
 
-const boolToString = (value: boolean) => value ? "yes" : "no";
-
 export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
   const {
+    id,
     inviteeName,
     numberOfPeople,
     isAttendingCeremony,
@@ -33,20 +32,28 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
 
   return (
     <div key={inviteeName} style={styles}>
-      <DataDisplay header="Name" body={inviteeName} />
-      <DataDisplay
+      <InviteDetails header="Name" body={inviteeName} rsvpId={id} fieldName="inviteeName" />
+      <InviteDetails
+        rsvpId={id}
+        body={isAttendingCeremony}
+        fieldName="isAttendingCeremony"
         header="Are they coming to the ceremony?"
-        body={boolToString(isAttendingCeremony)}
       />
-      <DataDisplay
+      <InviteDetails
+        rsvpId={id}
+        body={isAttendingReception}
+        fieldName="isAttendingReception"
         header="Are they coming to the reception?"
-        body={boolToString(isAttendingReception)}
       />
-      <DataDisplay
+      <InviteDetails
+        rsvpId={id}
+        body={isAttendingRehersal}
+        fieldName="isAttendingRehersal"
         header="Are they coming to the rehersal dinner?"
-        body={boolToString(isAttendingRehersal)}
       />
-      <DataDisplay
+      <InviteDetails
+        rsvpId={id}
+        fieldName="numberOfPeople"
         header="How many were invited?"
         body={numberOfPeople.toString()}
       />

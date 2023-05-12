@@ -14,7 +14,6 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
     inviteeName,
     numberOfPeople,
     isAttendingCeremony,
-    isAttendingRehersal,
     isAttendingReception,
   } = rsvp;
 
@@ -44,12 +43,6 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
         body={isAttendingReception}
         fieldName="isAttendingReception"
         header="Are they coming to the reception?"
-      />
-      <InviteDetails
-        rsvpId={id}
-        body={isAttendingRehersal}
-        fieldName="isAttendingRehersal"
-        header="Are they coming to the rehersal dinner?"
       />
       <InviteDetails
         rsvpId={id}

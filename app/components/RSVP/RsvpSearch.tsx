@@ -7,13 +7,11 @@ export interface RsvpSearchProps {
 
 export type RspvFilter = {
   isAttendingCeremony: boolean;
-  isAttendingRehersal: boolean;
   isAttendingReception: boolean;
 }
 
 export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
   const [text, setText] = useState("");
-  const [isAttendingRehersal, setIsAttendingRehersal] = useState(true);
   const [isAttendingCeremony, setIsAttendingCeremony] = useState(true);
   const [isAttendingReception, setIsAttendingReception] = useState(true);
 
@@ -33,7 +31,7 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
           onChange={(e) => {
             const inputtedText = e.currentTarget.value;
             setText(inputtedText);
-            onFilterInput(inputtedText, { isAttendingCeremony, isAttendingReception, isAttendingRehersal });
+            onFilterInput(inputtedText, { isAttendingCeremony, isAttendingReception });
           }}
         />
 
@@ -42,7 +40,7 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
             checked={isAttendingCeremony}
             onChange={(value) => {
               setIsAttendingCeremony(value);
-              onFilterInput(text, { isAttendingCeremony: value, isAttendingReception, isAttendingRehersal });
+              onFilterInput(text, { isAttendingCeremony: value, isAttendingReception });
             }}
         />
         
@@ -51,16 +49,7 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
             checked={isAttendingReception}
             onChange={(value) => {
               setIsAttendingReception(value);
-              onFilterInput(text, { isAttendingCeremony, isAttendingReception: value, isAttendingRehersal });
-            }}
-        />
-
-        <FilterToggle
-          label="Attending Rehersal"
-            checked={isAttendingRehersal}
-            onChange={(value) => {
-              setIsAttendingRehersal(value);
-              onFilterInput(text, { isAttendingCeremony, isAttendingReception, isAttendingRehersal: value });
+              onFilterInput(text, { isAttendingCeremony, isAttendingReception: value });
             }}
         />
       </div>

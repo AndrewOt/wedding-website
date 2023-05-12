@@ -1,7 +1,5 @@
 import { useFetcher } from "@remix-run/react";
-import { useCallback, useEffect, useRef, useState } from "react";
-
-import { RsvpPatch } from "~/utilities";
+import { useCallback, useRef, useState } from "react";
 
 export interface DataDisplayProps {
   rsvpId: string;
@@ -16,40 +14,28 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
   let inputComponent;
   const shouldBeText = !Number.isNaN(body);
   const formRef = useRef<HTMLFormElement>(null);
-  const [disabled, setDisabled] = useState(false);
   const [currentValue, setCurrentValue] = useState(body);
-  const { submit, state, Form } = useFetcher<RsvpPatch>();
+  const { submit, state, Form } = useFetcher();
 
   const handleBlur = useCallback(() => {
     submit(formRef.current, { replace: true });
   }, []);
-
-  useEffect(() => {
-    if (state === "loading") {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
-  }, [state]);
 
   // text or number field
   if (typeof body === 'string' || typeof body === 'number') {
     inputComponent = (
       <>
         <input type="hidden" name="id" value={rsvpId} />
-        <input type="hidden" name="fieldName" value={fieldName} />
-        <input type="hidden" name="value" value={currentValue.toString()} />
         <input
-          disabled={disabled}
+          name={fieldName}
+          disabled={state === "loading"}
           value={currentValue as number | string}
           type={shouldBeText ? 'text' : 'number'}
           onChange={(e) => {
             setCurrentValue(e.currentTarget.value as string);
           }}
           onBlur={() => {
-            if (currentValue !== body) {
-              handleBlur();
-            }
+            handleBlur();
           }}
         />
       </>
@@ -58,22 +44,17 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
     inputComponent = (
       <>
         <input type="hidden" name="id" value={rsvpId} />
-        <input type="hidden" name="fieldName" value={fieldName} />
-        <input type="hidden" name="value" value={currentValue.toString()} />
         <input
           type="checkbox"
-          disabled={disabled}
-          checked={currentValue as boolean}
+          name={fieldName}
+          disabled={state === "loading"}
+          defaultChecked={currentValue as boolean}
           onChange={(e) => {
-            setCurrentValue(Boolean(e.currentTarget.value));
-          }}
-          onBlur={() => {
-            if (currentValue !== body) {
-              handleBlur();
-            }
+            setCurrentValue(e.currentTarget.checked);
+            handleBlur();
           }}
         />
-        <label>{`(${boolToString(body)})`}</label>
+        <label>{`(${boolToString(Boolean(currentValue))})`}</label>
       </>
     );
   }

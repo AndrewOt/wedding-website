@@ -17,7 +17,6 @@ export type RSVP = {
   inviteeName: string;
   numberOfPeople: number;
   isAttendingCeremony: boolean;
-  isAttendingRehersal: boolean;
   isAttendingReception: boolean;
 };
 
@@ -35,7 +34,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const name = formData.get("inviteeName")?.toString();
   const num = Number(formData.get("numberOfPeople")?.toString());
   const ceremony = Boolean(formData.get("isAttendingCeremony")?.toString());
-  const rehersal = Boolean(formData.get("isAttendingRehersal")?.toString());
   const reception = Boolean(formData.get("isAttendingReception")?.toString());
 
   if (name === undefined || typeof num !== 'number') {
@@ -46,7 +44,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     id: v4(),
     inviteeName: name,
     numberOfPeople: num,
-    isAttendingRehersal: rehersal,
     isAttendingCeremony: ceremony,
     isAttendingReception: reception,
   };
@@ -74,13 +71,11 @@ export default function Rsvps() {
       const {
         isAttendingCeremony,
         isAttendingReception,
-        isAttendingRehersal
       } = attendingFilter;
       
       return item.inviteeName.toLowerCase().includes(text.toLowerCase())
         && isAttendingCeremony
         && isAttendingReception
-        && isAttendingRehersal;
     }));
   };
 

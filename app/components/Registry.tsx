@@ -1,7 +1,7 @@
 export const Registry = () => {
   return (
     <div>
-      <h1>Our Registry goes here!</h1>
+      <h1>Check Out Our Registry ✅</h1>
     </div>
   );
 };

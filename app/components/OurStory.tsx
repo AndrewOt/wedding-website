@@ -1,6 +1,6 @@
 export const OurStory = () => (
   <div>
-    <h1>Our Story</h1>
+    <h1>Our Story 📜</h1>
     <p>
       We met at church in the singles' ministry. We met early last year, but
       didn't get to know each other until the summer when we both attended a

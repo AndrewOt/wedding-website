@@ -1,5 +1,5 @@
 import { ActionArgs, ActionFunction } from "@remix-run/node";
-import { updateRsvp } from "~/utilities";
+import { updateRsvpSinglular } from "~/dbUtilities";
 
 export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
@@ -13,5 +13,5 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     }
   }
 
-  return updateRsvp(updateMap);
+  return updateRsvpSinglular(updateMap);
 };

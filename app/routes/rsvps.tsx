@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
 import { ActionArgs, ActionFunction, V2_MetaFunction, json } from "@vercel/remix";
 
-import { addRsvp, getRsvps } from "~/utilities";
+import { addRsvp, getRsvps } from "~/dbUtilities";
 import { Totals } from "~/components/RSVP/Totals";
 import { Invitee } from "~/components/RSVP/Invitee";
 import NewInvitee from "~/components/RSVP/NewInvitee";

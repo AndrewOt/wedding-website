@@ -11,7 +11,7 @@ const items = [
 
 export const Photos = () => (
   <div>
-    <h1>Photos!</h1>
+    <h1>Photos 📷</h1>
     <AliceCarousel
       mouseTracking
       touchTracking

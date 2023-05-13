@@ -20,7 +20,7 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div style={{ backgroundColor: "#f99a5a" }}>
+    <div>
       <Hero />
       <div className="content-body">
         <OurStory />

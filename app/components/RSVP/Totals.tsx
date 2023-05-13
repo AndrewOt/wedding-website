@@ -17,6 +17,9 @@ export const Totals = ({ rsvps }: TotalsProps) => {
       : previousAccumlatorValue;
   }, 0);
 
+  const grandTotal = rsvps.reduce((previousAccumlatorValue, currentRsvp) =>
+    previousAccumlatorValue + currentRsvp.numberOfPeople, 0);
+
   return (
     <div
       style={{
@@ -27,6 +30,7 @@ export const Totals = ({ rsvps }: TotalsProps) => {
       }}
     >
       <h2>Totals</h2>
+      <span>Total invited: {grandTotal}</span>
       <span>Total coming to the ceremony: {totalComingCeremony}</span>
       <span>Total coming to the reception: {totalComingReception}</span>
     </div>

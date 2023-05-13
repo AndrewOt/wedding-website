@@ -13,13 +13,5 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     }
   }
 
-  if (!updateMap.has('isAttendingCeremony')) {
-    updateMap.set('isAttendingCeremony', 'off');
-  }
-
-  if (!updateMap.has('isAttendingRehersal')) {
-    updateMap.set('isAttendingRehersal', 'off');
-  }
-
   return updateRsvp(updateMap);
 };

@@ -8,14 +8,19 @@ export interface DataDisplayProps {
   body: string | boolean | number;
 };
 
-const boolToString = (value: boolean) => value ? "yes" : "no";
+const convertStringIfBoolean = (value: unknown) => {
+  if (typeof value === 'boolean') {
+    return value ? "Yes" : "No";
+  }
+
+  return value;
+}
 
 export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayProps) => {
   let inputComponent;
-  const shouldBeText = !Number.isNaN(body);
-  const formRef = useRef<HTMLFormElement>(null);
-  const [currentValue, setCurrentValue] = useState(body);
   const { submit, state, Form } = useFetcher();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [currentValue, setCurrentValue] = useState(convertStringIfBoolean(body));
 
   const handleBlur = useCallback(() => {
     submit(formRef.current, { replace: true });
@@ -27,10 +32,10 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
       <>
         <input type="hidden" name="id" value={rsvpId} />
         <input
+          type="text"
           name={fieldName}
           disabled={state === "loading"}
           value={currentValue as number | string}
-          type={shouldBeText ? 'text' : 'number'}
           onChange={(e) => {
             setCurrentValue(e.currentTarget.value as string);
           }}
@@ -40,21 +45,37 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
         />
       </>
     );
-  } else { // checkbox
+  } else { // radio buttons
     inputComponent = (
       <>
         <input type="hidden" name="id" value={rsvpId} />
         <input
-          type="checkbox"
+          value="Yes"
+          type="radio"
           name={fieldName}
           disabled={state === "loading"}
-          defaultChecked={currentValue as boolean}
+          checked={currentValue === 'Yes'}
+          id={`Yes-${rsvpId}-${fieldName}`}
           onChange={(e) => {
-            setCurrentValue(e.currentTarget.checked);
+            setCurrentValue(e.currentTarget.value);
             handleBlur();
           }}
         />
-        <label>{`(${boolToString(Boolean(currentValue))})`}</label>
+        <label htmlFor={`Yes-${rsvpId}-${fieldName}`}>Yes</label>
+
+        <input
+          value="No"
+          type="radio"
+          name={fieldName}
+          disabled={state === "loading"}
+          checked={currentValue === 'No'}
+          id={`No-${rsvpId}-${fieldName}`}
+          onChange={(e) => {
+            setCurrentValue(e.currentTarget.value);
+            handleBlur();
+          }}
+        />
+        <label htmlFor={`No-${rsvpId}-${fieldName}`}>No</label>
       </>
     );
   }

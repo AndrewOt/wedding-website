@@ -7,6 +7,24 @@ h1 {
   text-align: center;
 }
 
+.button {
+  background: none;
+  border: 2px solid black;
+  padding: 3px 5px;
+  font-size: 15pt;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #ffb14b;
+}
+
+.text-box {
+  background: none;
+  border: 2px solid black;
+  padding: 6px 10px;
+}
+
 .content-body {
   margin-left: 10%;
   margin-right: 10%;

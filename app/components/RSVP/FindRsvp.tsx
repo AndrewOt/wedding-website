@@ -1,5 +1,5 @@
 import { Form, useActionData } from "@remix-run/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IRsvpTest } from "~/routes/_index";
 
 // See _index.tsx file for route action
@@ -35,8 +35,8 @@ export const FindRsvp = () => {
       <h1>RSVP 📨</h1>
       <Form method="post">
         <h4>Find your invitation by typing your name exactly as it appears on your invitiation</h4>
-        <input id="nameInput" type="text" name="inviteeName" placeholder="Please type your name here" />
-        <input name="_action" type="submit" value="Find" />
+        <input id="nameInput" type="text" name="inviteeName" className="text-box" placeholder="Please type your name here" />
+        <input name="_action" className="button" type="submit" value="Find" />
 
         <h4>{findResultMessage}</h4>
 

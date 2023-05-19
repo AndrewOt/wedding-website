@@ -11,6 +11,7 @@ interface InviteeProps {
 export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
   const {
     id,
+    address,
     inviteeName,
     numberOfPeople,
     isAttendingCeremony,
@@ -49,6 +50,12 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
         fieldName="numberOfPeople"
         header="How many were invited?"
         body={numberOfPeople.toString()}
+      />
+      <InviteDetails
+        rsvpId={id}
+        fieldName="address"
+        body={address ?? ''}
+        header="Guest's address"
       />
     </div>
   );

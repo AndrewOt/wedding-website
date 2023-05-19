@@ -13,6 +13,7 @@ import { QueryResult, QueryResultRow, sql } from '@vercel/postgres';
 const adapter = (rows: QueryResultRow[]): RSVP[] => {
   return rows.map((row) => ({
     id: row.id,
+    address: row.address,
     inviteeName: row.inviteename,
     numberOfPeople: row.numberofpeople,
     isAttendingCeremony: row.isattendingceremony,
@@ -50,10 +51,6 @@ export const addRsvp = async (rsvp: RSVP) => {
 
 // For some reason, the vercel sql api doesn't like us dynamically setting the column in the query 🤷🏻‍♂️
 export const updateRsvpSinglular = async (rsvpUpdate: Map<string, string>) => {
-  for (const thing of rsvpUpdate.entries()) {
-    console.dir(thing);
-  }
-
   try {
     if (rsvpUpdate.has('inviteeName')) {
       return await sql`UPDATE Rsvps SET inviteename=${rsvpUpdate.get('inviteeName')?.toString()} WHERE id=${rsvpUpdate.get('id')?.toString()}`
@@ -62,8 +59,9 @@ export const updateRsvpSinglular = async (rsvpUpdate: Map<string, string>) => {
     } else if (rsvpUpdate.has('isAttendingReception')) {
       return await sql`UPDATE Rsvps SET isattendingreception=${rsvpUpdate.get('isAttendingReception')?.toString()} WHERE id=${rsvpUpdate.get('id')?.toString()}`
     } else if (rsvpUpdate.has('numberOfPeople')) {
-      console.log(`UPDATE Rsvps SET numberofpeople=${rsvpUpdate.get('numberOfPeople')?.toString()} WHERE id=${rsvpUpdate.get('id')?.toString()}`);
       return await sql`UPDATE Rsvps SET numberofpeople=${rsvpUpdate.get('numberOfPeople')?.toString()} WHERE id=${rsvpUpdate.get('id')?.toString()}`
+    } else if (rsvpUpdate.has('address')) {
+      return await sql`UPDATE Rsvps SET address=${rsvpUpdate.get('address')?.toString()} WHERE id=${rsvpUpdate.get('id')?.toString()}`
     } else {
       throw new Error('Valid field not present!');
     }

@@ -14,7 +14,7 @@ const convertStringIfBoolean = (value: unknown) => {
   }
 
   return value;
-}
+};
 
 export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayProps) => {
   let inputComponent;

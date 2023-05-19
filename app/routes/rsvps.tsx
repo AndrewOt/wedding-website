@@ -16,6 +16,7 @@ import { useClerk } from "@clerk/remix";
 
 export type RSVP = {
   id: string;
+  address: string;
   inviteeName: string;
   numberOfPeople: number;
   isAttendingCeremony: boolean;
@@ -33,17 +34,19 @@ export const meta: V2_MetaFunction = () => {
 export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
   
+  const address = formData.get("address")?.toString();
   const name = formData.get("inviteeName")?.toString();
   const num = Number(formData.get("numberOfPeople")?.toString());
   const ceremony = Boolean(formData.get("isAttendingCeremony")?.toString());
   const reception = Boolean(formData.get("isAttendingReception")?.toString());
 
-  if (name === undefined || typeof num !== 'number') {
+  if (name === undefined || address === undefined || typeof num !== 'number') {
     return json({ message: 'Failed to save. Either the name or the number of guests was not provided.' });
   }
 
   const rsvpEntityToSave: RSVP = {
     id: v4(),
+    address: address,
     inviteeName: name,
     numberOfPeople: num,
     isAttendingCeremony: ceremony,

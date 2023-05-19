@@ -1,9 +1,9 @@
 import { v4 } from "uuid";
 import { useLoaderData } from "react-router";
-import { useActionData } from "@remix-run/react";
+import { useActionData, useNavigate } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
-import { ActionArgs, ActionFunction, V2_MetaFunction, json } from "@vercel/remix";
+import { ActionArgs, ActionFunction, V2_MetaFunction, json, redirect } from "@vercel/remix";
 
 import { addRsvp, getRsvps } from "~/dbUtilities";
 import { Totals } from "~/components/RSVP/Totals";
@@ -11,6 +11,8 @@ import { Invitee } from "~/components/RSVP/Invitee";
 import NewInvitee from "~/components/RSVP/NewInvitee";
 import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
 import { RspvFilter, RsvpSearch } from "~/components/RSVP/RsvpSearch";
+import { getAuth } from "@clerk/remix/ssr.server";
+import { useClerk } from "@clerk/remix";
 
 export type RSVP = {
   id: string;
@@ -55,14 +57,21 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   }
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async (args) => {
+  const { userId } = await getAuth(args);
+  if (!userId) {
+    return redirect('/login');
+  }
+
   const rsvps = await getRsvps();
   return rsvps;
 };
 
 export default function Rsvps() {
-  const rsvpList = useLoaderData();
   const errors = useActionData();
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
+  const rsvpList = useLoaderData();
   const data = useRef(rsvpList as RSVP[]);
   const [displayData, setDisplayData] = useState(rsvpList as RSVP[]);
 
@@ -94,10 +103,11 @@ export default function Rsvps() {
 
   return (
     <div>
+      <button onClick={() => { signOut(() => { navigate("/"); }); }}>Log out</button>
       <RsvpSearch onFilterInput={handleFilter} />
       <NewInvitee errors={errors} />
       <Totals rsvps={data.current} />
       <div>{components}</div>
     </div>
   );
-}
+};

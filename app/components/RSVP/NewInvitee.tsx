@@ -22,24 +22,29 @@ export default ({ errors }: NewInviteeProps) => {
       {errors?.message?.length > 0 ? errors.message : null}
 
       <Form replace ref={formRef} method="post">
-        <div style={{ display: 'flex', flexDirection: 'column', width: '40vw' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '40vw', marginBottom: '10px' }}>
           <label>Invitee's Name</label>
           <input ref={nameRef} type="text" placeholder="Invitee's Name" id="inviteeName" name="inviteeName" />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
           <label>Number of Attendees</label>
           <input style={{ width: '5vw' }} type="number" id="numberOfPeople" name="numberOfPeople" />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
           <label>Are they coming to the ceremony?</label>
           <input style={{ width: '5rem', transform: 'translateX(-1.5rem)' }} type="checkbox" id="isAttendingCeremony" name="isAttendingCeremony" />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
           <label>Are they coming to the reception?</label>
           <input style={{ width: '5rem', transform: 'translateX(-1.5rem)' }} type="checkbox" id="isAttendingReception" name="isAttendingReception" />
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', width: '40vw', marginBottom: '10px' }}>
+          <label htmlFor='inviteeAddress'>Invitee's Address</label>
+          <input type="text" placeholder="Invitee's address" id="inviteeAddress" name="inviteeAddress" />
         </div>
 
         <input type="submit" value="Add New Invitee" />

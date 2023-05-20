@@ -1,19 +1,24 @@
+import { QueryResult, QueryResultRow } from "@vercel/postgres";
+import { findInvitation, updateEntireRsvp } from "~/dbUtilities";
 import type { ActionFunction, LinksFunction, V2_MetaFunction } from "@vercel/remix";
-import { Footer } from "~/components/Footer";
+
 import { Hero } from "~/components/Hero";
-import { OurStory } from "~/components/OurStory";
+import { Footer } from "~/components/Footer";
 import { Photos } from "~/components/Photos";
 import { Registry } from "~/components/Registry";
+import { OurStory } from "~/components/OurStory";
 import { FindRsvp } from "~/components/RSVP/FindRsvp";
 
 import indexStyles from "../index.css";
 import heroStyles from "~/components/Hero.css";
-import { findInvitation, updateEntireRsvp } from "~/dbUtilities";
-import { QueryResult, QueryResultRow } from "@vercel/postgres";
+import footerStyles from '~/components/Footer.css';
+import pictureStyles from '~/components/Photo.css';
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: indexStyles },
   { rel: "stylesheet", href: heroStyles },
+  { rel: "stylesheet", href: indexStyles },
+  { rel: "stylesheet", href: footerStyles },
+  { rel: "stylesheet", href: pictureStyles },
 ];
 
 export const meta: V2_MetaFunction = () => {

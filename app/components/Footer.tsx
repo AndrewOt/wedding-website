@@ -1,5 +1,5 @@
 export const Footer = () => (
-  <div>
-    <h1>Footer</h1>
+  <div className="footer-container">
+    <span>This website was built by the groom for his lovely bride :)</span>
   </div>
 );

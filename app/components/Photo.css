@@ -1,0 +1,19 @@
+.alice-carousel__stage {
+  text-align: center;
+}
+
+.engagement-picture {
+  max-width: 500px;
+}
+
+@media screen and (max-width: 722px) {
+  .engagement-picture {
+    max-width: 500px;
+  }
+}
+
+@media screen and (max-width: 586px) {
+  .engagement-picture {
+    max-width: 300px;
+  }
+}

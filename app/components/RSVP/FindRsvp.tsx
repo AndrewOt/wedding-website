@@ -45,7 +45,14 @@ export const FindRsvp = () => {
         <h4>Find your invitation by typing your name exactly as it is addressed on your invitation envelope</h4>
         <div className="find-container">
           <input id="nameInput" type="text" name="inviteeName" className="text-box" placeholder="Please type your name here" />
-          <input name="_action" className="button" type="submit" value="Find" disabled={state === 'submitting'} />
+          <input
+            value="Find"
+            type="submit"
+            name="_action"
+            className="button"
+            disabled={state === 'submitting'}
+            onClick={() => { setShowLoading(true); }}
+          />
         </div>
 
         {showLoading ? <LoadingInvitation /> : <span className="find-status">{findResultMessage}</span>}

@@ -1,12 +1,12 @@
 html {
   height: 100%;
-  font-size: 16px;
+  font-size: 16pt;
   font-family: "Roberto", sans-serif;
 }
 
 @media screen and (max-width: 586px) {
   html {
-    font-size: 12px;
+    font-size: 15pt;
   }
 }
 
@@ -16,21 +16,44 @@ h1 {
 
 .button {
   background: none;
-  border: 2px solid black;
   padding: 3px 5px;
-  font-size: 15pt;
+  font-size: inherit;
+  border-radius: 5px;
+  border: 2px solid #ffb14b;
 }
 
 .button:hover {
+  color: white;
   cursor: pointer;
-  background-color: #ffb14b;
+  border-color: #de8073;
+  background-color: #de8073;
+}
+
+.button:focus {
+  outline: none;
+  border: 2px solid #de8073;
 }
 
 .text-box {
   width: 40%;
   background: none;
-  border: 2px solid black;
   padding: 6px 10px;
+  font-size: inherit;
+  border-radius: 5px;
+  border: 2px solid #ffb14b;
+}
+
+.text-box:hover { 
+  border: 2px solid #de8073;
+}
+
+.text-box:focus {
+  outline: none;
+  border: 2px solid #de8073;
+}
+
+.text-box:active {
+  border: 2px solid #de8073;
 }
 
 @media screen and (max-width: 722px) {

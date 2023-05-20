@@ -13,10 +13,12 @@ import indexStyles from "../index.css";
 import heroStyles from "~/components/Hero.css";
 import footerStyles from '~/components/Footer.css';
 import pictureStyles from '~/components/Photo.css';
+import storyStyles from '~/components/OurStory.css';
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: heroStyles },
   { rel: "stylesheet", href: indexStyles },
+  { rel: "stylesheet", href: storyStyles },
   { rel: "stylesheet", href: footerStyles },
   { rel: "stylesheet", href: pictureStyles },
 ];

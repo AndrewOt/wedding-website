@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 
 import { IRsvpTest } from "~/routes/_index";
 
@@ -8,13 +8,12 @@ import { IRsvpTest } from "~/routes/_index";
 const LoadingInvitation = () => <div className="find-status find-status-animate">Loading</div>
 
 export const FindRsvp = () => {
+  const { state } = useNavigation();
   const rsvpAction = useActionData<IRsvpTest>();
   const [ceremonyYes, setCeremonyYes] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [receptionYes, setReceptionYes] = useState(false);
-  const [findDisabled, setFindDisabled] = useState(false);
   const [updateStatusMessage, setUpdateStatusMessage] = useState('');
-  const [saveChoiceDisabled, setSaveChoiceDisabled] = useState(false);
   const [choicePanelDisplay, setChoicePanelDisplay] = useState('none');
   const [findResultMessage, setFindResultMessage] = useState<string>('');
 
@@ -22,35 +21,22 @@ export const FindRsvp = () => {
     setShowLoading(false);
     if (rsvpAction?.action === 'Find') {
       if (rsvpAction.isInvited) {
-        setFindDisabled(false);
         setChoicePanelDisplay('block');
         setFindResultMessage('We found your invite! 🎉');
       } else {
-        setFindDisabled(false);
         setChoicePanelDisplay('none');
         setFindResultMessage("I'm sorry, we could not find your invite.");
       }
     } else if (rsvpAction?.action === 'Save choice') {
       if (rsvpAction.successfulUpdate && rsvpAction.isAttending) {
-        setSaveChoiceDisabled(false);
         setUpdateStatusMessage('Got it saved! Excited you can make it! 😀');
       } else if (rsvpAction.successfulUpdate && !rsvpAction.isAttending) {
-        setSaveChoiceDisabled(false);
         setUpdateStatusMessage("Got it saved. We are so sad you won't be able to be there 😢");
       }
 
       setTimeout(() => { setUpdateStatusMessage(''); }, 3000);
     }
   }, [rsvpAction]);
-
-  // TODO - find where this logic should run so that the ux has all the edge cases covered.
-  // if (!rsvpAction || rsvpAction.action === 'Find') {
-  //   setShowLoading(true);
-  //   setFindDisabled(true);
-  //   setChoicePanelDisplay('none');
-  // } else if (rsvpAction?.action === 'Save choice') {
-  //   setSaveChoiceDisabled(true);
-  // }
 
   return (
     <div>
@@ -59,7 +45,7 @@ export const FindRsvp = () => {
         <h4>Find your invitation by typing your name exactly as it is addressed on your invitation envelope</h4>
         <div className="find-container">
           <input id="nameInput" type="text" name="inviteeName" className="text-box" placeholder="Please type your name here" />
-          <input name="_action" className="button" type="submit" value="Find" disabled={findDisabled} />
+          <input name="_action" className="button" type="submit" value="Find" disabled={state === 'submitting'} />
         </div>
 
         {showLoading ? <LoadingInvitation /> : <span className="find-status">{findResultMessage}</span>}
@@ -114,7 +100,7 @@ export const FindRsvp = () => {
             name="_action"
             className="button"
             value="Save choice"
-            disabled={saveChoiceDisabled}
+            disabled={state === 'submitting'}
           />
           <span className="find-status">{updateStatusMessage}</span>
         </div>

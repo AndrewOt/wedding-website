@@ -20,9 +20,85 @@ h1 {
 }
 
 .text-box {
+  width: 40%;
   background: none;
   border: 2px solid black;
   padding: 6px 10px;
+}
+
+@media screen and (max-width: 786px) {
+  .text-box {
+    width: 100%;
+  }
+}
+
+.find-container {
+  gap: 0.5rem;
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.find-rsvp-form-header {
+  display: block;
+  font-size: 13pt;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.find-rsvp-form-input {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.find-status {
+  display: block;
+  font-size: 15pt;
+  font-weight: 500;
+  margin-bottom: 0.7rem;
+}
+
+.find-status-animate:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "\2026";
+  width: 0px;
+}
+
+.find-status-timeout::after {
+  display: none;
+}
+
+@keyframes ellipsis {
+  0% {
+    width: 0px;
+  }
+  33% {
+    width: 15px;
+  }
+  66% {
+    width: 25px;
+  }
+  100% {
+    width: 40px;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  0% {
+    width: 0px;
+  }
+  33% {
+    width: 15px;
+  }
+  66% {
+    width: 25px;
+  }
+  100% {
+    width: 40px;
+  }
 }
 
 .content-body {

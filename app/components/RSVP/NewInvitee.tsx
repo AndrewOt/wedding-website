@@ -51,4 +51,4 @@ export default ({ errors }: NewInviteeProps) => {
       </Form>
     </div>
   )
-}
+};

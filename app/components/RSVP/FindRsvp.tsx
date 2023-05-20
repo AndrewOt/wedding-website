@@ -1,48 +1,72 @@
+import { useEffect, useRef, useState } from "react";
 import { Form, useActionData } from "@remix-run/react";
-import { useEffect, useState } from "react";
+
 import { IRsvpTest } from "~/routes/_index";
 
 // See _index.tsx file for route action
 
+const LoadingInvitation = () => <div className="find-status find-status-animate">Loading</div>
+
 export const FindRsvp = () => {
   const rsvpAction = useActionData<IRsvpTest>();
+  const [ceremonyYes, setCeremonyYes] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
+  const [receptionYes, setReceptionYes] = useState(false);
+  const [findDisabled, setFindDisabled] = useState(false);
   const [updateStatusMessage, setUpdateStatusMessage] = useState('');
+  const [saveChoiceDisabled, setSaveChoiceDisabled] = useState(false);
   const [choicePanelDisplay, setChoicePanelDisplay] = useState('none');
   const [findResultMessage, setFindResultMessage] = useState<string>('');
-  const [ceremonyYes, setCeremonyYes] = useState(false);
-  const [receptionYes, setReceptionYes] = useState(false);
 
   useEffect(() => {
+    setShowLoading(false);
     if (rsvpAction?.action === 'Find') {
       if (rsvpAction.isInvited) {
-        setFindResultMessage('We found your invite!');
+        setFindDisabled(false);
         setChoicePanelDisplay('block');
+        setFindResultMessage('We found your invite! 🎉');
       } else {
-        setFindResultMessage("I'm sorry, we could not find your invite.");
+        setFindDisabled(false);
         setChoicePanelDisplay('none');
+        setFindResultMessage("I'm sorry, we could not find your invite.");
       }
     } else if (rsvpAction?.action === 'Save choice') {
       if (rsvpAction.successfulUpdate && rsvpAction.isAttending) {
+        setSaveChoiceDisabled(false);
         setUpdateStatusMessage('Got it saved! Excited you can make it! 😀');
       } else if (rsvpAction.successfulUpdate && !rsvpAction.isAttending) {
+        setSaveChoiceDisabled(false);
         setUpdateStatusMessage("Got it saved. We are so sad you won't be able to be there 😢");
       }
+
+      setTimeout(() => { setUpdateStatusMessage(''); }, 3000);
     }
   }, [rsvpAction]);
+
+  // TODO - find where this logic should run so that the ux has all the edge cases covered.
+  // if (!rsvpAction || rsvpAction.action === 'Find') {
+  //   setShowLoading(true);
+  //   setFindDisabled(true);
+  //   setChoicePanelDisplay('none');
+  // } else if (rsvpAction?.action === 'Save choice') {
+  //   setSaveChoiceDisabled(true);
+  // }
 
   return (
     <div>
       <h1>RSVP 📨</h1>
       <Form method="post">
-        <h4>Find your invitation by typing your name exactly as it appears on your invitiation</h4>
-        <input id="nameInput" type="text" name="inviteeName" className="text-box" placeholder="Please type your name here" />
-        <input name="_action" className="button" type="submit" value="Find" />
+        <h4>Find your invitation by typing your name exactly as it is addressed on your invitation envelope</h4>
+        <div className="find-container">
+          <input id="nameInput" type="text" name="inviteeName" className="text-box" placeholder="Please type your name here" />
+          <input name="_action" className="button" type="submit" value="Find" disabled={findDisabled} />
+        </div>
 
-        <h4>{findResultMessage}</h4>
+        {showLoading ? <LoadingInvitation /> : <span className="find-status">{findResultMessage}</span>}
 
         <div style={{ display: choicePanelDisplay }}>
-          <div>
-            <h4>Will you be attending the ceremony?</h4>
+          <div className="find-rsvp-form-input">
+            <span className="find-rsvp-form-header">Will you be attending the ceremony?</span>
             <input
               type="radio"
               name="ceremony"
@@ -61,32 +85,38 @@ export const FindRsvp = () => {
               onChange={() => { setCeremonyYes(false); setReceptionYes(false); }}
             />
             <label htmlFor="ceremonyNo">No</label>
-
-            <div style={{ display: ceremonyYes ? 'block' : 'none' }}>
-              <h4>Will you be attending the reception?</h4>
-              <input
-                type="radio"
-                name="reception"
-                id="receptionYes"
-                value="receptionYes"
-                checked={receptionYes}
-                onChange={() => { setReceptionYes(true); }}
-              />
-              <label htmlFor="receptionYes">Yes</label>
-              <input
-                type="radio"
-                name="reception"
-                id="receptionNo"
-                value="receptionNo"
-                checked={!receptionYes}
-                onChange={() => { setReceptionYes(false); }}
-              />
-              <label htmlFor="receptionNo">No</label>
-            </div>
-
-            <input type="submit" value="Save choice" name="_action" />
-            <h4>{updateStatusMessage}</h4>
           </div>
+
+          <div style={{ display: ceremonyYes ? 'block' : 'none' }} className="find-rsvp-form-input">
+            <span className="find-rsvp-form-header">Will you be attending the reception?</span>
+            <input
+              type="radio"
+              name="reception"
+              id="receptionYes"
+              value="receptionYes"
+              checked={receptionYes}
+              onChange={() => { setReceptionYes(true); }}
+            />
+            <label htmlFor="receptionYes">Yes</label>
+            <input
+              type="radio"
+              name="reception"
+              id="receptionNo"
+              value="receptionNo"
+              checked={!receptionYes}
+              onChange={() => { setReceptionYes(false); }}
+            />
+            <label htmlFor="receptionNo">No</label>
+          </div>
+
+          <input
+            type="submit"
+            name="_action"
+            className="button"
+            value="Save choice"
+            disabled={saveChoiceDisabled}
+          />
+          <span className="find-status">{updateStatusMessage}</span>
         </div>
       </Form>
     </div>

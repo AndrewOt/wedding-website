@@ -1,7 +1,9 @@
 import { v4 } from "uuid";
+import { useClerk } from "@clerk/remix";
 import { useLoaderData } from "react-router";
-import { useActionData, useNavigate } from "@remix-run/react";
+import { getAuth } from "@clerk/remix/ssr.server";
 import { useEffect, useRef, useState } from "react";
+import { useActionData, useNavigate } from "@remix-run/react";
 import type { LinksFunction, LoaderFunction } from "@remix-run/server-runtime";
 import { ActionArgs, ActionFunction, V2_MetaFunction, json, redirect } from "@vercel/remix";
 
@@ -9,10 +11,9 @@ import { addRsvp, getRsvps } from "~/dbUtilities";
 import { Totals } from "~/components/RSVP/Totals";
 import { Invitee } from "~/components/RSVP/Invitee";
 import NewInvitee from "~/components/RSVP/NewInvitee";
-import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
 import { RspvFilter, RsvpSearch } from "~/components/RSVP/RsvpSearch";
-import { getAuth } from "@clerk/remix/ssr.server";
-import { useClerk } from "@clerk/remix";
+
+import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
 
 export type RSVP = {
   id: string;
@@ -78,16 +79,47 @@ export default function Rsvps() {
   const data = useRef(rsvpList as RSVP[]);
   const [displayData, setDisplayData] = useState(rsvpList as RSVP[]);
 
-  const handleFilter = (text: string, attendingFilter: RspvFilter) => {
+  const handleFilter = (attendingFilter: RspvFilter) => {
     setDisplayData(data.current.filter((item) => {
       const {
+        text,
         isAttendingCeremony,
         isAttendingReception,
       } = attendingFilter;
-      
-      return item.inviteeName.toLowerCase().includes(text.toLowerCase())
-        && isAttendingCeremony
-        && isAttendingReception
+
+      if (isAttendingCeremony === item.isAttendingCeremony) {
+        return true;
+      } else if (isAttendingReception === item.isAttendingReception) {
+        return true;
+      } else if (text && item.inviteeName.toLowerCase().includes(text.toLowerCase())) {
+        return true;
+      } else {
+        return false;
+      }
+
+      // let shouldInclude = true;
+
+      // if (text && !item.inviteeName.toLowerCase().includes(text.toLowerCase())) {
+      //   shouldInclude = false;
+      // }
+
+      // if (isAttendingCeremony !== item.isAttendingCeremony) {
+      //   shouldInclude = false;
+      // }
+
+      // if (isAttendingReception !== item.isAttendingReception) {
+      //   shouldInclude = false;
+      // }
+
+      // return shouldInclude;
+
+      // if (text) {
+      //   return item.inviteeName.toLowerCase().includes(text.toLowerCase())
+      //     || isAttendingCeremony
+      //     || isAttendingReception;
+      // }
+
+      // return isAttendingCeremony || isAttendingReception;
     }));
   };
 
@@ -106,11 +138,13 @@ export default function Rsvps() {
 
   return (
     <div>
-      <button onClick={() => { signOut(() => { navigate("/"); }); }}>Log out</button>
-      <RsvpSearch onFilterInput={handleFilter} />
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <RsvpSearch onFilterInput={handleFilter} />
+        <button className="button" style={{ alignSelf: 'start', margin: '10px' }} onClick={() => { signOut(() => { navigate("/"); }); }}>Log out</button>
+      </div>
       <NewInvitee errors={errors} />
       <Totals rsvps={data.current} />
-      <div>{components}</div>
+      <div className="rsvp-container">{components}</div>
     </div>
   );
 };

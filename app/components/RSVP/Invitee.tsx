@@ -23,7 +23,7 @@ export const Invitee = ({ rsvp, isStripped, isLast }: InviteeProps) => {
     paddingLeft: "5px",
     flexDirection: "column",
     borderTop: "1px solid #000",
-    backgroundColor: isStripped ? "#dcdcdc" : "#fff",
+    backgroundColor: isStripped ? "#9eb0ba78" : "#fff",
   };
 
   if (isLast) {

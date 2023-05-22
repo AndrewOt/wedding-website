@@ -34,7 +34,9 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
         <input
           type="text"
           name={fieldName}
+          className="text-box"
           disabled={state === "loading"}
+          style={{ backgroundColor: 'white', width: '40vw' }}
           value={currentValue as number | string}
           onChange={(e) => {
             setCurrentValue(e.currentTarget.value as string);
@@ -84,7 +86,7 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
     <>
       <h4 className="rsvp-header">{header}</h4>
       <div className="rsvp-body">
-        <Form action="/rsvp-update" method="patch" ref={formRef}>
+        <Form action="/rsvp-update" method="patch" ref={formRef} style={{ marginBottom: '15px' }}>
           {inputComponent}
         </Form>
       </div>

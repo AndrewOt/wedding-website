@@ -1,4 +1,4 @@
-import { Form } from '@remix-run/react';
+import { Form, useNavigation } from '@remix-run/react';
 import { useEffect, useRef } from 'react';
 
 export interface NewInviteeProps {
@@ -6,6 +6,7 @@ export interface NewInviteeProps {
 }
 
 export default ({ errors }: NewInviteeProps) => {
+  const { state } = useNavigation();
   let formRef = useRef<HTMLFormElement>(null);
   let nameRef = useRef<HTMLInputElement>(null);
 
@@ -14,7 +15,7 @@ export default ({ errors }: NewInviteeProps) => {
       formRef.current?.reset();
       nameRef.current?.focus();
     }
-  });
+  }, [state]);
 
   return (
     <div style={{ marginLeft: '5px' }}>
@@ -24,30 +25,60 @@ export default ({ errors }: NewInviteeProps) => {
       <Form replace ref={formRef} method="post">
         <div style={{ display: 'flex', flexDirection: 'column', width: '40vw', marginBottom: '10px' }}>
           <label>Invitee's Name</label>
-          <input ref={nameRef} type="text" placeholder="Invitee's Name" id="inviteeName" name="inviteeName" />
+          <input
+            type="text"
+            ref={nameRef}
+            id="inviteeName"
+            name="inviteeName"
+            className="text-box"
+          />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
           <label>Number of Attendees</label>
-          <input style={{ width: '5vw' }} type="number" id="numberOfPeople" name="numberOfPeople" />
+          <input
+            type="number"
+            id="numberOfPeople"
+            className="text-box"
+            name="numberOfPeople"
+            style={{ width: '5vw' }}
+          />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
           <label>Are they coming to the ceremony?</label>
-          <input style={{ width: '5rem', transform: 'translateX(-1.5rem)' }} type="checkbox" id="isAttendingCeremony" name="isAttendingCeremony" />
+          <input
+            type="checkbox"
+            className="text-box"
+            id="isAttendingCeremony"
+            name="isAttendingCeremony"
+            style={{ width: '5rem', transform: 'translateX(-1.5rem)' }}
+          />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
           <label>Are they coming to the reception?</label>
-          <input style={{ width: '5rem', transform: 'translateX(-1.5rem)' }} type="checkbox" id="isAttendingReception" name="isAttendingReception" />
+          <input
+            type="checkbox"
+            className="text-box"
+            id="isAttendingReception"
+            name="isAttendingReception"
+            style={{ width: '5rem', transform: 'translateX(-1.5rem)' }}
+          />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', width: '40vw', marginBottom: '10px' }}>
           <label htmlFor='inviteeAddress'>Invitee's Address</label>
-          <input type="text" placeholder="Invitee's address" id="inviteeAddress" name="inviteeAddress" />
+          <input
+            type="text"
+            id="inviteeAddress"
+            className="text-box"
+            name="inviteeAddress"
+            style={{ width: '40vw' }}
+          />
         </div>
 
-        <input type="submit" value="Add New Invitee" />
+        <input type="submit" value="Add New Invitee" className="button" />
       </Form>
     </div>
   )

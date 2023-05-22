@@ -11,8 +11,13 @@ import {
 import { rootAuthLoader } from "@clerk/remix/ssr.server";
 import { ClerkApp, ClerkCatchBoundary } from "@clerk/remix";
 
+import indexStyles from "./index.css";
+
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  ...(cssBundleHref ? [
+    { rel: "stylesheet", href: indexStyles },
+    { rel: "stylesheet", href: cssBundleHref },
+  ] : []),
 ];
 
 export const CatchBoundary = ClerkCatchBoundary();

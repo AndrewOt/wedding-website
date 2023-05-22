@@ -2,10 +2,11 @@ import { useState } from "react";
 import FilterToggle from "./FilterToggle";
 
 export interface RsvpSearchProps {
-  onFilterInput: (text: string, attendingFilter: RspvFilter) => void;
+  onFilterInput: (attendingFilter: RspvFilter) => void;
 }
 
 export type RspvFilter = {
+  text: string;
   isAttendingCeremony: boolean;
   isAttendingReception: boolean;
 }
@@ -26,12 +27,14 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
         <label htmlFor="RsvpSearchInput">Search for an invite</label>
         <input
           type="text"
+          className="text-box"
           id="RsvpSearchInput"
+          style={{ width: '40vw' }}
           placeholder="Type to filter by name"
           onChange={(e) => {
             const inputtedText = e.currentTarget.value;
             setText(inputtedText);
-            onFilterInput(inputtedText, { isAttendingCeremony, isAttendingReception });
+            onFilterInput({ text: inputtedText, isAttendingCeremony, isAttendingReception });
           }}
         />
 
@@ -40,7 +43,7 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
             checked={isAttendingCeremony}
             onChange={(value) => {
               setIsAttendingCeremony(value);
-              onFilterInput(text, { isAttendingCeremony: value, isAttendingReception });
+              onFilterInput({ text, isAttendingCeremony: value, isAttendingReception });
             }}
         />
         
@@ -49,9 +52,21 @@ export const RsvpSearch = ({ onFilterInput }: RsvpSearchProps) => {
             checked={isAttendingReception}
             onChange={(value) => {
               setIsAttendingReception(value);
-              onFilterInput(text, { isAttendingCeremony, isAttendingReception: value });
+              onFilterInput({ text, isAttendingCeremony, isAttendingReception: value });
             }}
         />
+
+        {/* <input
+          type="button"
+          className="button"
+          value="Reset Filter"
+          onChange={() => {
+            setText('');
+            setIsAttendingCeremony(true);
+            setIsAttendingCeremony(true);
+            onFilterInput({ text: '', isAttendingCeremony: true, isAttendingReception: true });
+          }}
+        /> */}
       </div>
     </div>
   );

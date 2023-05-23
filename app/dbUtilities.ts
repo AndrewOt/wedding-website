@@ -1,5 +1,6 @@
 import { RSVP } from './routes/rsvps';
-import { QueryResult, QueryResultRow, sql } from '@vercel/postgres';
+import type { QueryResult, QueryResultRow } from '@vercel/postgres';
+import { sql } from '@vercel/postgres';
 
 // FYI, the config for this is a bit magical. Basically, they env vars are in
 // the cloud and you need a local .env file w/those config values.

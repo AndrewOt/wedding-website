@@ -3,7 +3,7 @@
   height: 100vh; /* Set the height you want */
   position: relative;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../../public/mn-landscape-arboretum-engagement-photo-12.jpg");
+    url("../../public/hero.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -30,7 +30,7 @@
 
 .hero-arrow-conatiner {
   color: white;
-  position:relative;
+  position: relative;
 }
 
 .hero-arrow {

@@ -24,7 +24,7 @@ export const OurStory = () => (
         sunrise in the park where we got to know each other and had their first
         date. So, on the 1st, a Saturday, we got to the park at 7am in 26 degree
         weather. Little did she know, Andrew had a ring in his pocket! He had intentions
-        to get on one knee as they packing up, but it was very cold, so he went
+        to get on one knee as they were packing up, but it was very cold, so he went
         for it... and she said yes!! It was a very blessed and wonderful day! The
         Lord has been very kind to us in our relationship and we can't wait to celebrate with you!
       </p>

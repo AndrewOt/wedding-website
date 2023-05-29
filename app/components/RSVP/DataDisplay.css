@@ -9,3 +9,10 @@
 .rsvp-body {
   width: fit-content;
 }
+
+.rsvp-address-button {
+  align-self: start;
+  margin: 10px;
+  text-decoration: none;
+  color: black;
+}

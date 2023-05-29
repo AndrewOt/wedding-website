@@ -134,6 +134,15 @@ export default function Rsvps() {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <RsvpSearch onFilterInput={handleFilter} />
+        <a
+          download
+          href="/addresses"
+          className="button rsvp-address-button"
+          style={{ alignSelf: 'start', margin: '10px' }}
+        >
+          Generate Address List
+        </a>
+
         <button
           className="button"
           style={{ alignSelf: "start", margin: "10px" }}

@@ -14,6 +14,7 @@ import heroStyles from "~/components/Hero.css";
 import footerStyles from '~/components/Footer.css';
 import pictureStyles from '~/components/Photo.css';
 import storyStyles from '~/components/OurStory.css';
+import findRsvpStyles from '~/components/RSVP/FindRsvp.css';
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: heroStyles },
@@ -21,6 +22,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: storyStyles },
   { rel: "stylesheet", href: footerStyles },
   { rel: "stylesheet", href: pictureStyles },
+  { rel: "stylesheet", href: findRsvpStyles },
 ];
 
 export const meta: V2_MetaFunction = () => {
@@ -78,11 +80,11 @@ export default function Index() {
   return (
     <div>
       <Hero />
-      <div className="content-body">
+      <div>
         <OurStory />
         <FindRsvp />
-        <Registry />
         <Photos />
+        <Registry />
       </div>
       <Footer />
     </div>

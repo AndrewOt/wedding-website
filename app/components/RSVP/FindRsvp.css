@@ -1,0 +1,113 @@
+.find-container {
+  gap: 0.7rem;
+  display: flex;
+  margin-bottom: 0.5rem;
+  flex-direction: column;
+}
+
+.find-rsvp-section {
+  color: white;
+  background-color: #9daf97;
+}
+
+.find-rsvp-button,
+.find-rsvp-button:focus {
+  width: 100%;
+  border: none;
+  color: white;
+  border-radius: 2px;
+  background-color: #5a7650;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.find-rsvp-button:hover {
+  background-color: #43583c;
+}
+
+.save-rsvp-button,
+.save-rsvp-button:focus {
+  border: none;
+  color: white;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  background-color: #5a7650;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.save-rsvp-button:hover {
+  background-color: #43583c;
+}
+
+.find-rsvp-text-box {
+  width: 98%;
+  border: none;
+  background-color: white;
+}
+
+.find-rsvp-text-box:focus,
+.find-rsvp-text-box:hover {
+  border: none;
+}
+
+.find-rsvp-form-header {
+  display: block;
+  font-size: 13pt;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.find-rsvp-form-input {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.find-status {
+  display: block;
+  font-size: 15pt;
+  font-weight: 500;
+  margin-bottom: 0.7rem;
+}
+
+.find-status-animate:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
+  content: "\2026";
+  width: 0px;
+}
+
+.find-status-timeout::after {
+  display: none;
+}
+
+@keyframes ellipsis {
+  0% {
+    width: 0px;
+  }
+  33% {
+    width: 15px;
+  }
+  66% {
+    width: 25px;
+  }
+  100% {
+    width: 40px;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  0% {
+    width: 0px;
+  }
+  33% {
+    width: 15px;
+  }
+  66% {
+    width: 25px;
+  }
+  100% {
+    width: 40px;
+  }
+}

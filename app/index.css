@@ -4,22 +4,37 @@ html {
   font-family: "Roberto", sans-serif;
 }
 
+@font-face {
+  font-family: 'Snell Roundhand';
+  src: url("/fonts/SnellBT-Regular.otf");
+}
+
 @media screen and (max-width: 586px) {
   html {
     font-size: 15pt;
   }
 }
 
+body {
+  font-family: "Libre Baskerville", sans-serif;
+}
+
 h1 {
   text-align: center;
+  font-family: "snell roundhand", sans-serif;
+}
+
+.section {
+  padding: 2rem 20%;
 }
 
 .button {
   background: none;
   padding: 3px 5px;
   font-size: inherit;
-  border-radius: 5px;
+  border-radius: 2px;
   border: 2px solid #ffb14b;
+  font-family: "Libre Baskerville", sans-serif;
 }
 
 .button:hover {
@@ -39,8 +54,9 @@ h1 {
   background: none;
   padding: 6px 10px;
   font-size: inherit;
-  border-radius: 5px;
+  border-radius: 2px;
   border: 2px solid #ffb14b;
+  font-family: "Libre Baskerville", sans-serif;
 }
 
 .text-box:hover { 
@@ -62,73 +78,9 @@ h1 {
   }
 }
 
-.find-container {
-  gap: 0.5rem;
-  display: flex;
-  margin-bottom: 0.5rem;
-}
-
-.find-rsvp-form-header {
-  display: block;
-  font-size: 13pt;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-}
-
-.find-rsvp-form-input {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.find-status {
-  display: block;
-  font-size: 15pt;
-  font-weight: 500;
-  margin-bottom: 0.7rem;
-}
-
-.find-status-animate:after {
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
-  animation: ellipsis steps(4, end) 900ms infinite;
-  content: "\2026";
-  width: 0px;
-}
-
-.find-status-timeout::after {
-  display: none;
-}
-
-@keyframes ellipsis {
-  0% {
-    width: 0px;
-  }
-  33% {
-    width: 15px;
-  }
-  66% {
-    width: 25px;
-  }
-  100% {
-    width: 40px;
-  }
-}
-
-@-webkit-keyframes ellipsis {
-  0% {
-    width: 0px;
-  }
-  33% {
-    width: 15px;
-  }
-  66% {
-    width: 25px;
-  }
-  100% {
-    width: 40px;
-  }
+.registry {
+  text-align: center;
+  background-color: #f2b981;
 }
 
 .content-body {

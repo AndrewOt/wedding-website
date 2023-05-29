@@ -6,6 +6,7 @@
     url("../../public/hero.jpg");
   background-size: cover;
   background-position: center;
+  font-family: 'snell roundhand', sans-serif;
 }
 
 .hero-image-text-container {

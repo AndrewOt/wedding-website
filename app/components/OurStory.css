@@ -1,5 +1,26 @@
-.content-body {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+.story-section {
+  padding: 2rem 5%;
+}
+
+.story-container {
+  gap: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.tulip-container {
+  min-width: 5rem;
+  fill: #d8af88;
+}
+
+@media screen and (max-width: 722px) {
+  .tulip-container {
+    min-width: 3rem;
+  }
+}
+
+@media screen and (max-width: 586px) {
+  .tulip-container {
+    display: none;
+  }
 }

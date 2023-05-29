@@ -38,17 +38,17 @@ export const FindRsvp = () => {
     if (rsvpAction?.action === "Find") {
       if (rsvpAction.isInvited) {
         setChoicePanelDisplay("block");
-        setFindResultMessage("We found your invite! 🎉");
+        setFindResultMessage("We found your invite!");
       } else {
         setChoicePanelDisplay("none");
         setFindResultMessage("I'm sorry, we could not find your invite.");
       }
     } else if (rsvpAction?.action === "Save choice") {
       if (rsvpAction.successfulUpdate && rsvpAction.isAttending) {
-        setUpdateStatusMessage("Got it saved! Excited you can make it! 😀");
+        setUpdateStatusMessage("Got it saved! Excited you can make it!");
       } else if (rsvpAction.successfulUpdate && !rsvpAction.isAttending) {
         setUpdateStatusMessage(
-          "Got it saved. We are so sad you won't be able to be there 😢"
+          "Got it saved. We are so sad you won't be able to be there."
         );
       }
 
@@ -59,29 +59,33 @@ export const FindRsvp = () => {
   }, [rsvpAction]);
 
   return (
-    <div>
-      <h1>RSVP 📨</h1>
-      <div>
-        <span>August 26th @ 1:30 pm {daysToGoText} - Topeka KS</span>
+    <section className="section find-rsvp-section">
+      <h1>Please join us in celebration on</h1>
+      <div style={{ textAlign: 'center' }}>
+        <div>Saturday, August 26th ({daysToGoText})</div>
+        <div>1:30 pm</div>
+        <div>Topeka KS</div>
       </div>
+
+      <h1>RSVP</h1>
       <Form method="post">
-        <h4>
+        <div style={{ marginBottom: '0.5rem ' }}>
           Find your invitation by typing your name exactly as it is addressed on
           your invitation envelope
-        </h4>
+        </div>
         <div className="find-container">
           <input
-            id="nameInput"
             type="text"
+            id="nameInput"
             name="inviteeName"
-            className="text-box"
+            className="text-box find-rsvp-text-box"
             placeholder="Please type your name here"
           />
           <input
             value="Find"
             type="submit"
             name="_action"
-            className="button"
+            className="button find-rsvp-button"
             disabled={state === "submitting"}
             onClick={() => {
               setShowLoading(true);
@@ -159,13 +163,13 @@ export const FindRsvp = () => {
           <input
             type="submit"
             name="_action"
-            className="button"
             value="Save choice"
+            className="button save-rsvp-button"
             disabled={state === "submitting"}
           />
           <span className="find-status">{updateStatusMessage}</span>
         </div>
       </Form>
-    </div>
+    </section>
   );
 };

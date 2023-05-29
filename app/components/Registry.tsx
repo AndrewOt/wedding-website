@@ -1,7 +1,8 @@
 export const Registry = () => {
   return (
-    <div>
-      <h1>Check Out Our Registry ✅</h1>
-    </div>
+    <section className="section registry">
+      <h1>Gift Registry</h1>
+      <h3>Coming soon!</h3>
+    </section>
   );
 };

@@ -61,15 +61,15 @@ export const FindRsvp = () => {
   return (
     <section className="section find-rsvp-section">
       <h1>Please join us in celebration on</h1>
-      <div style={{ textAlign: 'center' }}>
-        <div>Saturday, August 26th ({daysToGoText})</div>
+      <div style={{ textAlign: "center" }}>
+        <div>Saturday, August 26th {daysToGoText}</div>
         <div>1:30 pm</div>
         <div>Topeka KS</div>
       </div>
 
       <h1>RSVP</h1>
       <Form method="post">
-        <div style={{ marginBottom: '0.5rem ' }}>
+        <div style={{ marginBottom: "0.5rem " }}>
           Find your invitation by typing your name exactly as it is addressed on
           your invitation envelope
         </div>

@@ -44,10 +44,11 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const address = formData.get("address")?.toString();
   const name = formData.get("inviteeName")?.toString();
   const num = Number(formData.get("numberOfPeople")?.toString());
+  console.log("the number of people", typeof num);
   const ceremony = Boolean(formData.get("isAttendingCeremony")?.toString());
   const reception = Boolean(formData.get("isAttendingReception")?.toString());
 
-  if (name === undefined || address === undefined || typeof num !== "number") {
+  if (name === undefined || typeof num !== "number") {
     return json({
       message:
         "Failed to save. Either the name or the number of guests was not provided.",
@@ -56,9 +57,9 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
 
   const rsvpEntityToSave: RSVP = {
     id: v4(),
-    address: address,
     inviteeName: name,
     numberOfPeople: num,
+    address: address || "",
     isAttendingCeremony: ceremony,
     isAttendingReception: reception,
   };
@@ -138,7 +139,7 @@ export default function Rsvps() {
           download
           href="/addresses"
           className="button rsvp-address-button"
-          style={{ alignSelf: 'start', margin: '10px' }}
+          style={{ alignSelf: "start", margin: "10px" }}
         >
           Generate Address List
         </a>

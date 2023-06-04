@@ -1,6 +1,10 @@
 import { QueryResult, QueryResultRow } from "@vercel/postgres";
 import { findInvitation, updateEntireRsvp } from "~/dbUtilities";
-import type { ActionFunction, LinksFunction, V2_MetaFunction } from "@vercel/remix";
+import type {
+  ActionFunction,
+  LinksFunction,
+  V2_MetaFunction,
+} from "@vercel/remix";
 
 import { Hero } from "~/components/Hero";
 import { Footer } from "~/components/Footer";
@@ -11,10 +15,11 @@ import { FindRsvp } from "~/components/RSVP/FindRsvp";
 
 import indexStyles from "../index.css";
 import heroStyles from "~/components/Hero.css";
-import footerStyles from '~/components/Footer.css';
-import pictureStyles from '~/components/Photo.css';
-import storyStyles from '~/components/OurStory.css';
-import findRsvpStyles from '~/components/RSVP/FindRsvp.css';
+import footerStyles from "~/components/Footer.css";
+import pictureStyles from "~/components/Photo.css";
+import storyStyles from "~/components/OurStory.css";
+import findRsvpStyles from "~/components/RSVP/FindRsvp.css";
+import { RSVP } from "./rsvps";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: heroStyles },
@@ -31,45 +36,75 @@ export const meta: V2_MetaFunction = () => {
 
 export type IRsvpTest = {
   error?: string;
+  rsvpId?: string;
   isInvited?: boolean;
   isAttending?: boolean;
+  numberOfPeople?: number;
   successfulUpdate?: boolean;
-  action: 'Find' | 'Save choice';
-}
+  action: "Find" | "Save choice";
+};
+
+type RSVPModel = {
+  id: string;
+  address: string;
+  inviteename: string;
+  numberofpeople: number;
+  isattendingceremony: boolean;
+  isattendingreception: boolean;
+};
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const { _action, ...values } = Object.fromEntries(formData);
 
-  switch(_action) {
-    case 'Find':
-      const nameToCheck = values['inviteeName'];
-      const isInvited = await findInvitation(nameToCheck.toString());
-      if (typeof isInvited === 'boolean') {
-        return { action: _action, isInvited };
+  switch (_action) {
+    case "Find":
+      const nameToCheck = values["inviteeName"];
+      const isInvitedData = await findInvitation(nameToCheck.toString());
+      if (isInvitedData) {
+        const data = isInvitedData as RSVPModel;
+        return {
+          action: _action,
+          isInvited: true,
+          rsvpId: data.id,
+          numberOfPeople: data.numberofpeople,
+        };
       } else {
-        return { action: _action, error: 'There was an error confirming the rsvp.' };
+        return {
+          action: _action,
+          error: "There was an error confirming the rsvp.",
+        };
       }
-    case 'Save choice':
-      const confirmedName = values['inviteeName'].toString();
-      const ceremonyConfirm = values['ceremony'].toString();
-      const receptionConfirm = values['reception'].toString();
+    case "Save choice":
+      const confirmedName = values["inviteeName"].toString();
+      const ceremonyConfirm = values["ceremony"].toString();
+      const receptionConfirm = values["reception"].toString();
+      const numberOfPeople = values["numberOfPeople"].toString();
+      const rsvpId = values["rsvpId"].toString();
 
       const updateMap = new Map<string, string>([
-        ['inviteeName', confirmedName],
-        ['isAttendingCeremony', ceremonyConfirm],
-        ['isAttendingReception', receptionConfirm],
+        ["inviteeName", confirmedName],
+        ["isAttendingCeremony", ceremonyConfirm],
+        ["isAttendingReception", receptionConfirm],
+        ["numberOfPeople", numberOfPeople],
+        ["rsvpId", rsvpId],
       ]);
 
       const result = await updateEntireRsvp(updateMap);
       if ((result as QueryResult<QueryResultRow>).rowCount) {
         return {
           action: _action,
-          isAttending: ceremonyConfirm === 'ceremonyYes' || receptionConfirm === 'receptionYes',
-          successfulUpdate: (result as QueryResult<QueryResultRow>).rowCount === 1
+          isAttending:
+            ceremonyConfirm === "ceremonyYes" ||
+            receptionConfirm === "receptionYes",
+          successfulUpdate:
+            (result as QueryResult<QueryResultRow>).rowCount === 1,
         };
       } else {
-        return { action: _action, error: 'There was an error updating the rsvp.' };
+        return {
+          action: _action,
+          error: "There was an error updating the rsvp.",
+        };
       }
   }
 

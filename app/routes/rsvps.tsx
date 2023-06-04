@@ -44,7 +44,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const address = formData.get("address")?.toString();
   const name = formData.get("inviteeName")?.toString();
   const num = Number(formData.get("numberOfPeople")?.toString());
-  console.log("the number of people", typeof num);
   const ceremony = Boolean(formData.get("isAttendingCeremony")?.toString());
   const reception = Boolean(formData.get("isAttendingReception")?.toString());
 

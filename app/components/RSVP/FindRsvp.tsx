@@ -15,6 +15,7 @@ export const FindRsvp = () => {
   const [ceremonyYes, setCeremonyYes] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [receptionYes, setReceptionYes] = useState(false);
+  const [numberOfPeople, setNumberOfPeople] = useState(0);
   const [updateStatusMessage, setUpdateStatusMessage] = useState("");
   const [choicePanelDisplay, setChoicePanelDisplay] = useState("none");
   const [findResultMessage, setFindResultMessage] = useState<string>("");
@@ -39,6 +40,7 @@ export const FindRsvp = () => {
       if (rsvpAction.isInvited) {
         setChoicePanelDisplay("block");
         setFindResultMessage("We found your invite!");
+        setNumberOfPeople(rsvpAction.numberOfPeople || 0);
       } else {
         setChoicePanelDisplay("none");
         setFindResultMessage("I'm sorry, we could not find your invite.");
@@ -69,10 +71,11 @@ export const FindRsvp = () => {
 
       <h1>RSVP</h1>
       <Form method="post">
-        <div style={{ marginBottom: "0.5rem " }}>
+        <div style={{ marginBottom: "0.5rem" }}>
           Find your invitation by typing your name exactly as it is addressed on
           your invitation envelope
         </div>
+        <input type="hidden" name="rsvpId" value={rsvpAction?.rsvpId} />
         <div className="find-container">
           <input
             type="text"
@@ -158,6 +161,22 @@ export const FindRsvp = () => {
               }}
             />
             <label htmlFor="receptionNo">No</label>
+            <div style={{ marginTop: "0.7rem" }}>
+              <label htmlFor="numberOfPeople">Number of people coming</label>
+              <input
+                type="number"
+                id="numberOfPeople"
+                name="numberOfPeople"
+                value={numberOfPeople}
+                className="text-box find-rsvp-text-box"
+                onChange={(e) => {
+                  const num = Number(e.currentTarget.value);
+                  if (typeof num === "number") {
+                    setNumberOfPeople(num);
+                  }
+                }}
+              />
+            </div>
           </div>
 
           <input

@@ -1,26 +1,37 @@
 import { Form, useNavigation } from "@remix-run/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface NewInviteeProps {
-  errors: { message: string };
+  formStatus: { errorMessage: string };
 }
 
-const NewInvitee = ({ errors }: NewInviteeProps) => {
+const NewInvitee = ({ formStatus }: NewInviteeProps) => {
   const { state } = useNavigation();
   let formRef = useRef<HTMLFormElement>(null);
   let nameRef = useRef<HTMLInputElement>(null);
+  const [formStatusMessage, setFormStatusMessage] = useState('');
 
   useEffect(() => {
-    if (errors === undefined) {
+    if (formStatus?.errorMessage === undefined) {
       formRef.current?.reset();
       nameRef.current?.focus();
     }
   }, [state]);
 
+  useEffect(() => {
+    setFormStatusMessage(formStatus?.errorMessage?.length > 0 ? formStatus?.errorMessage : 'Saved successfully!');
+
+    setTimeout(() => {
+      setFormStatusMessage('');
+    }, 2000);
+  }, [setFormStatusMessage]);
+
   return (
     <div style={{ marginLeft: "5px" }}>
       <h2>Add an Attendee</h2>
-      {errors?.message?.length > 0 ? errors.message : null}
+      <div>
+        {formStatusMessage}
+      </div>
 
       <Form replace ref={formRef} method="post">
         <div
@@ -38,6 +49,7 @@ const NewInvitee = ({ errors }: NewInviteeProps) => {
             id="inviteeName"
             name="inviteeName"
             className="text-box"
+            style={{ width: "40vw" }}
           />
         </div>
 
@@ -101,13 +113,14 @@ const NewInvitee = ({ errors }: NewInviteeProps) => {
           }}
         >
           <label htmlFor="inviteeAddress">Invitee's Address</label>
-          <input
-            type="text"
+          <textarea
+            rows={2}
+            defaultValue=""
             id="inviteeAddress"
             className="text-box"
             name="inviteeAddress"
             style={{ width: "40vw" }}
-          />
+          ></textarea>
         </div>
 
         <input type="submit" value="Add New Invitee" className="button" />

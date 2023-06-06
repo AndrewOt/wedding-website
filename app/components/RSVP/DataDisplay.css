@@ -1,3 +1,14 @@
+html { 
+  height: 100%;
+  font-size: 13pt;
+  font-family: "Roberto", sans-serif;
+}
+
+h2 {
+  font-size: 13pt;
+  font-family: sans-serif;
+}
+
 .rsvp-container {
   padding-bottom: 55vh;
 }

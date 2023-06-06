@@ -41,7 +41,7 @@ export const meta: V2_MetaFunction = () => {
 export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
 
-  const address = formData.get("address")?.toString();
+  const address = formData.get("inviteeAddress")?.toString();
   const name = formData.get("inviteeName")?.toString();
   const num = Number(formData.get("numberOfPeople")?.toString());
   const ceremony = Boolean(formData.get("isAttendingCeremony")?.toString());
@@ -67,7 +67,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     return await addRsvp(rsvpEntityToSave);
   } catch {
     return json({
-      message:
+      errorMessage:
         "Saving the data to the database was not successful. Please try again.",
     });
   }
@@ -118,6 +118,10 @@ export default function Rsvps() {
   };
 
   useEffect(() => {
+    data.current = rsvpList as RSVP[];
+  }, [rsvpList]);
+
+  useEffect(() => {
     setDisplayData(rsvpList as RSVP[]);
   }, [rsvpList]);
 
@@ -155,9 +159,9 @@ export default function Rsvps() {
           Log out
         </button>
       </div>
-      <NewInvitee errors={errors} />
+      <NewInvitee formStatus={errors} />
       <Totals rsvps={data.current} />
       <div className="rsvp-container">{components}</div>
     </div>
   );
-}
+};

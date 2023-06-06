@@ -27,7 +27,26 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
   }, []);
 
   // text or number field
-  if (typeof body === 'string' || typeof body === 'number') {
+  if (fieldName === 'address') {
+    inputComponent = (
+      <>
+        <input type="hidden" name="id" value={rsvpId} />
+        <textarea
+          name={fieldName}
+          className="text-box"
+          disabled={state === "loading"}
+          style={{ backgroundColor: 'white', width: '40vw' }}
+          value={currentValue as number | string}
+          onChange={(e) => {
+            setCurrentValue(e.currentTarget.value as string);
+          }}
+          onBlur={() => {
+            handleBlur();
+          }}
+        />
+      </>
+    );
+  } else if (typeof body === 'string' || typeof body === 'number') {
     inputComponent = (
       <>
         <input type="hidden" name="id" value={rsvpId} />

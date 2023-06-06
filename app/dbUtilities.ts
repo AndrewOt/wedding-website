@@ -39,6 +39,7 @@ export const getRsvps = async (inviteeName?: string): Promise<RSVP[]> => {
 export const addRsvp = async (rsvp: RSVP) => {
   const {
     id,
+    address,
     inviteeName,
     numberOfPeople,
     isAttendingCeremony,
@@ -46,7 +47,7 @@ export const addRsvp = async (rsvp: RSVP) => {
   } = rsvp;
 
   try {
-    return await sql`INSERT INTO Rsvps (InviteeName, NumberOfPeople, isAttendingCeremony, isAttendingReception, id) VALUES (${inviteeName}, ${numberOfPeople}, ${isAttendingCeremony}, ${isAttendingReception}, ${id});`;
+    return await sql`INSERT INTO Rsvps (InviteeName, NumberOfPeople, isAttendingCeremony, isAttendingReception, id, address) VALUES (${inviteeName.trim()}, ${numberOfPeople}, ${isAttendingCeremony}, ${isAttendingReception}, ${id}, ${address.trim()});`;
   } catch (e) {
     return e;
   }

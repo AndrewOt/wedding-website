@@ -37,9 +37,9 @@ const NewInvitee = ({ formStatus }: NewInviteeProps) => {
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             width: "40vw",
             marginBottom: "10px",
+            flexDirection: "column",
           }}
         >
           <label>Invitee's Name</label>

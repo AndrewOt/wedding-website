@@ -19,7 +19,6 @@ import footerStyles from "~/components/Footer.css";
 import pictureStyles from "~/components/Photo.css";
 import storyStyles from "~/components/OurStory.css";
 import findRsvpStyles from "~/components/RSVP/FindRsvp.css";
-import { RSVP } from "./rsvps";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: heroStyles },
@@ -99,6 +98,7 @@ export const action: ActionFunction = async ({ request }) => {
             receptionConfirm === "receptionYes",
           successfulUpdate:
             (result as QueryResult<QueryResultRow>).rowCount === 1,
+          rsvpId,
         };
       } else {
         return {

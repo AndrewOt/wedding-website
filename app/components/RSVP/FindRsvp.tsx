@@ -75,7 +75,7 @@ export const FindRsvp = () => {
           Find your invitation by typing your name exactly as it is addressed on
           your invitation envelope
         </div>
-        <input type="hidden" name="rsvpId" value={rsvpAction?.rsvpId} />
+        <input type="hidden" name="rsvpId" value={rsvpAction?.rsvpId ?? ''} />
         <div className="find-container">
           <input
             type="text"
@@ -167,11 +167,11 @@ export const FindRsvp = () => {
                 type="number"
                 id="numberOfPeople"
                 name="numberOfPeople"
-                value={numberOfPeople}
                 className="text-box find-rsvp-text-box"
+                value={numberOfPeople}
                 onChange={(e) => {
                   const num = Number(e.currentTarget.value);
-                  if (typeof num === "number") {
+                  if (!Number.isNaN(num)) {
                     setNumberOfPeople(num);
                   }
                 }}

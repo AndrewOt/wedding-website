@@ -6,7 +6,7 @@ export interface NewInviteeProps {
 }
 
 const NewInvitee = ({ formStatus }: NewInviteeProps) => {
-  const { state } = useNavigation();
+  const { state, formAction } = useNavigation();
   let formRef = useRef<HTMLFormElement>(null);
   let nameRef = useRef<HTMLInputElement>(null);
   const [formStatusMessage, setFormStatusMessage] = useState('');
@@ -19,12 +19,14 @@ const NewInvitee = ({ formStatus }: NewInviteeProps) => {
   }, [state]);
 
   useEffect(() => {
-    setFormStatusMessage(formStatus?.errorMessage?.length > 0 ? formStatus?.errorMessage : 'Saved successfully!');
+    if (formAction === '/rsvps') {
+      setFormStatusMessage(formStatus?.errorMessage?.length > 0 ? formStatus?.errorMessage : 'Saved successfully!');
 
-    setTimeout(() => {
-      setFormStatusMessage('');
-    }, 2000);
-  }, [setFormStatusMessage]);
+      setTimeout(() => {
+        setFormStatusMessage('');
+      }, 2000);
+    }
+  }, [formAction, setFormStatusMessage]);
 
   return (
     <div style={{ marginLeft: "5px" }}>
@@ -114,7 +116,7 @@ const NewInvitee = ({ formStatus }: NewInviteeProps) => {
         >
           <label htmlFor="inviteeAddress">Invitee's Address</label>
           <textarea
-            rows={2}
+            rows={3}
             defaultValue=""
             id="inviteeAddress"
             className="text-box"

@@ -32,6 +32,7 @@ export const InviteDetails = ({ header, body, rsvpId, fieldName }: DataDisplayPr
       <>
         <input type="hidden" name="id" value={rsvpId} />
         <textarea
+          rows={3}
           name={fieldName}
           className="text-box"
           disabled={state === "loading"}

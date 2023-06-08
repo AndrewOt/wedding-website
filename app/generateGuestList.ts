@@ -1,14 +1,16 @@
 import { getRsvps } from "./dbUtilities";
 
 // output to text file
-async function outputFile() {
-  // const addresses = await getAddresses();
+async function outputFile(addressesOnly: boolean) {
   const addresses = await getRsvps();
   let fileString = ``;
 
   addresses.forEach((invitee) => {
     const { inviteeName, address } = invitee;
-    if (inviteeName && address) {
+    if (inviteeName && !addressesOnly) {
+      fileString += `${inviteeName}
+`;
+    } else if (inviteeName && address && addressesOnly) {
       fileString += `${inviteeName}
 ${address}
 
@@ -20,6 +22,9 @@ ${address}
 };
 
 export async function generateAddresses() {
-  const file = await outputFile();
-  return file
+  return await outputFile(true);
+};
+
+export async function generateFullNameList() {
+  return await outputFile(false);
 };

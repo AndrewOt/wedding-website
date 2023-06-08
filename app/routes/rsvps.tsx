@@ -134,17 +134,27 @@ export default function Rsvps() {
     />
   ));
 
+  console.log('how many records', displayData.length);
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <RsvpSearch onFilterInput={handleFilter} />
         <a
           download
-          href="/addresses"
+          href="/guest-list?addressesOnly=true"
           className="button rsvp-address-button"
           style={{ alignSelf: "start", margin: "10px" }}
         >
           Generate Address List
+        </a>
+        <a
+          download
+          href="/guest-list"
+          className="button rsvp-address-button"
+          style={{ alignSelf: "start", margin: "10px" }}
+        >
+          Generate Full Guest List (names only)
         </a>
 
         <button

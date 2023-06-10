@@ -1,16 +1,31 @@
-.hero-image {
-  width: 100%;
-  height: 100vh; /* Set the height you want */
-  position: relative;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("../../public/hero.jpg");
-  background-size: cover;
-  background-position: center;
-  font-family: 'snell roundhand', sans-serif;
+@media (orientation: portrait) {
+  .hero-image {
+    width: 100%;
+    height: 100vh; /* Set the height you want */
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+      url("../../public/hero.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: "snell roundhand", sans-serif;
+  }
+}
+
+@media (orientation: landscape) {
+  .hero-image {
+    width: 100%;
+    height: 100vh; /* Set the height you want */
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+      url("../../public/BO2A0097.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: "snell roundhand", sans-serif;
+  }
 }
 
 .hero-image-text-container {
-  top: 50%;
+  top: 65%;
   left: 50%;
   color: white;
   text-align: center;

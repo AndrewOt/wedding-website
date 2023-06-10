@@ -1,4 +1,4 @@
-import { QueryResult, QueryResultRow } from "@vercel/postgres";
+import type { QueryResult, QueryResultRow } from "@vercel/postgres";
 import { findInvitation, updateEntireRsvp } from "~/dbUtilities";
 import type {
   ActionFunction,

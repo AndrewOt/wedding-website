@@ -6,7 +6,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const addressesOnly = url.searchParams.get('addressesOnly');
 
   if (addressesOnly) {
-    return new Response(await generateAddresses());
+    return new Response(await generateAddresses(), { headers: { 'Content-Type': 'text/csv' }});
   } else {
     return new Response(await generateFullNameList());
   }

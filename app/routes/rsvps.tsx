@@ -20,6 +20,7 @@ import { RsvpSearch } from "~/components/RSVP/RsvpSearch";
 import type { RspvFilter } from "~/components/RSVP/RsvpSearch";
 
 import DataDisplayStyles from "~/components/RSVP/DataDisplay.css";
+import { FunctionButton } from "~/components/RSVP/FunctionButton";
 
 export type RSVP = {
   id: string;
@@ -128,46 +129,31 @@ export default function Rsvps() {
   const components = displayData.map((rsvp, index) => (
     <Invitee
       rsvp={rsvp}
-      key={rsvp.inviteeName}
+      key={rsvp.id}
       isStripped={index % 2 === 0}
       isLast={index === displayData.length - 1}
     />
   ));
 
-  console.log('how many records', displayData.length);
-
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <RsvpSearch onFilterInput={handleFilter} />
-        <a
-          download
-          href="/guest-list?addressesOnly=true"
-          className="button rsvp-address-button"
-          style={{ alignSelf: "start", margin: "10px" }}
-        >
-          Generate Address List
-        </a>
-        <a
-          download
-          href="/guest-list"
-          className="button rsvp-address-button"
-          style={{ alignSelf: "start", margin: "10px" }}
-        >
-          Generate Full Guest List (names only)
-        </a>
-
-        <button
-          className="button"
-          style={{ alignSelf: "start", margin: "10px" }}
-          onClick={() => {
-            signOut(() => {
-              navigate("/");
-            });
-          }}
-        >
-          Log out
-        </button>
+        <div style={{ display: 'flex', flexDirection: 'column', direction: 'rtl' }}>
+          <button
+            className="button"
+            style={{ alignSelf: "start", margin: "10px" }}
+            onClick={() => {
+              signOut(() => {
+                navigate("/");
+              });
+            }}
+          >
+            Log out
+          </button>
+          <FunctionButton href="/guest-list?addressesOnly=true" text="Generate Address List" />
+          <FunctionButton href="/guest-list" text="Generate Full Guest List (names only)" />
+        </div>
       </div>
       <NewInvitee formStatus={errors} />
       <Totals rsvps={data.current} />

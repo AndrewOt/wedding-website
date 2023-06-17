@@ -87,7 +87,6 @@ export const updateRsvpSinglular = async (rsvpUpdate: Map<string, string>) => {
 export const updateEntireRsvp = async (
   rsvpUpdate: Map<string, string>
 ): Promise<QueryResult<QueryResultRow> | string> => {
-  console.dir(rsvpUpdate);
   try {
     const rsvpId = rsvpUpdate.get("rsvpId")?.toString();
     const numberOfPeople = rsvpUpdate.get("numberOfPeople")?.toString();

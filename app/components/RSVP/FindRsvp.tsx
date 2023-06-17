@@ -50,7 +50,7 @@ export const FindRsvp = () => {
         setUpdateStatusMessage("Got it saved! Excited you can make it!");
       } else if (rsvpAction.successfulUpdate && !rsvpAction.isAttending) {
         setUpdateStatusMessage(
-          "Got it saved. We are so sad you won't be able to be there."
+          "Thank you for letting us know. You'll be missed!"
         );
       }
 

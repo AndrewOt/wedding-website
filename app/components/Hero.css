@@ -1,7 +1,7 @@
 @media (orientation: portrait) {
   .hero-image {
-    width: 100%;
-    height: 100vh; /* Set the height you want */
+    width: 100dvw;
+    height: 100dvh;
     position: relative;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
       url("../../public/hero.jpg");
@@ -13,8 +13,8 @@
 
 @media (orientation: landscape) {
   .hero-image {
-    width: 100%;
-    height: 100vh; /* Set the height you want */
+    width: 100dwv;
+    height: 100dvh;
     position: relative;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
       url("../../public/BO2A0097.jpg");
@@ -55,6 +55,8 @@
   width: 3rem;
   color: white;
   position: absolute;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 }
 
 .hero-arrow:hover {

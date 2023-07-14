@@ -72,9 +72,11 @@ export const FindRsvp = () => {
       <h1>RSVP</h1>
       <Form method="post">
         <div style={{ marginBottom: "0.5rem" }}>
-          Find your invitation by typing your name exactly as it is written on paper with the QR code and website address
+          Find your invitation by typing your name exactly as it is written on
+          paper with the QR code and website address.
         </div>
-        <input type="hidden" name="rsvpId" value={rsvpAction?.rsvpId ?? ''} />
+        <div style={{ marginBottom: "0.5rem" }}>Please RSVP by August 5th.</div>
+        <input type="hidden" name="rsvpId" value={rsvpAction?.rsvpId ?? ""} />
         <div className="find-container">
           <input
             type="text"
